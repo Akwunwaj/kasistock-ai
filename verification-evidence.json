@@ -1,0 +1,64 @@
+{
+  "release": "0.5.0",
+  "scope": "Deployment hardening and OpenAI Build Week submission asset production",
+  "toolchain": {
+    "node": "24.15.0",
+    "npm": "11.12.1",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "typescript": "6.0.3",
+    "openai": "6.48.0",
+    "playwright": "1.61.1",
+    "axeCorePlaywright": "4.12.1"
+  },
+  "gates": {
+    "cleanInstall": "passed",
+    "format": "passed",
+    "lint": "passed_zero_warnings",
+    "routeTypeGeneration": "passed",
+    "typecheck": "passed",
+    "testFiles": 17,
+    "tests": 34,
+    "failures": 0,
+    "evaluation": "passed",
+    "productionBuild": "passed",
+    "productionEnvironmentValidation": "passed",
+    "productionRoutes": "passed",
+    "readiness": "passed",
+    "securityHeaders": "passed",
+    "offlineAccessibilityAudit": "passed_zero_violations",
+    "submissionScreenshots": 4,
+    "draftReferenceVideo": "generated_16_seconds",
+    "interactiveBrowserE2E": "not_executed_environment_restriction",
+    "liveOpenAI": "not_run_no_key_in_packaging_environment",
+    "githubPublication": "pending_credentials",
+    "vercelDeployment": "pending_credentials",
+    "finalNarratedYouTube": "pending_user_recording_and_publication",
+    "devpostSubmission": "pending_external_submission"
+  },
+  "accessibility": {
+    "standard": "WCAG 2 A/AA and WCAG 2.1 A/AA",
+    "routes": 5,
+    "violations": 0
+  },
+  "coreWorkflow": {
+    "acceptedEvidenceSnapshots": 4,
+    "acceptedMappings": 16,
+    "restockCandidates": 4,
+    "selectedOrderLines": 3,
+    "availableBudgetCents": 150000,
+    "approvedOrderTotalCents": 139910,
+    "remainingBudgetCents": 10090,
+    "supplierPurchaseOrders": 2,
+    "supplierMessages": 2,
+    "auditEvents": 6,
+    "unsafeAutomaticMerges": 0
+  },
+  "packaging": {
+    "secretFilesExcluded": true,
+    "generatedDependenciesExcluded": true,
+    "generatedBuildOutputExcluded": true,
+    "sourceHashesGenerated": true,
+    "zipIntegrityTested": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "datasetVersion": "product-matching-v1",
+  "measuredAt": "2026-07-18T01:50:00+02:00",
+  "totalCases": 12,
+  "passedCases": 11,
+  "productAccuracyPercent": 91.67,
+  "authorityAccuracyPercent": 91.67,
+  "unsafeAutoMergeCount": 0,
+  "releaseThreshold": {
+    "minimumProductAccuracyPercent": 90,
+    "minimumAuthorityAccuracyPercent": 90,
+    "maximumUnsafeAutoMergeCount": 0
+  },
+  "status": "passed"
+}

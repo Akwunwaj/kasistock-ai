@@ -1,0 +1,23 @@
+{
+  "name": "KasiStock AI",
+  "tagline": "Turn limited cash into the right stock.",
+  "track": "Work and Productivity",
+  "links": {
+    "demo": "<DEPLOYMENT_URL>",
+    "repository": "<REPOSITORY_URL>",
+    "video": "<YOUTUBE_URL>"
+  },
+  "codexFeedbackSessionId": "<CODEX_FEEDBACK_SESSION_ID>",
+  "gallery": [
+    "submission/screenshots/01-home-dashboard.png",
+    "submission/screenshots/02-human-evidence-review.png",
+    "submission/screenshots/03-approved-supplier-orders.png",
+    "submission/screenshots/04-trust-boundaries.png"
+  ],
+  "verification": {
+    "automatedTests": 34,
+    "productIdentityAccuracyPercent": 91.67,
+    "unsafeAutomaticMerges": 0,
+    "offlineWcagViolations": 0
+  }
+}

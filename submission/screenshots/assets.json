@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-07-18T09:03:24.602Z",
+  "baseUrl": "http://127.0.0.1:3015",
+  "mode": "offline server-rendered DOM",
+  "viewport": "1440x900",
+  "screenshots": [
+    "01-home-dashboard.png",
+    "02-human-evidence-review.png",
+    "03-approved-supplier-orders.png",
+    "04-trust-boundaries.png"
+  ],
+  "draftVideo": "submission/video/kasistock-ai-demo-draft.mp4"
+}

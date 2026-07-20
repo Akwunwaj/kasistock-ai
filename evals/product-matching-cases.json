@@ -1,0 +1,86 @@
+[
+  {
+    "caseId": "barcode-bread",
+    "rawProductName": "Unknown white loaf",
+    "barcode": "6001007001018",
+    "expectedProductId": "bread-albany-white-700g",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "alias-bread",
+    "rawProductName": "Albany Superior White 700g",
+    "barcode": null,
+    "expectedProductId": "bread-albany-white-700g",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "normalised-bread",
+    "rawProductName": "ALBANY superior white bread 700 G",
+    "barcode": null,
+    "expectedProductId": "bread-albany-white-700g",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "barcode-coke",
+    "rawProductName": "Cola 2 litre",
+    "barcode": "5449000000996",
+    "expectedProductId": "softdrink-coke-original-2l",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "alias-coke",
+    "rawProductName": "Coke Original PET 2L",
+    "barcode": null,
+    "expectedProductId": "softdrink-coke-original-2l",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "fuzzy-coke",
+    "rawProductName": "Coca Cola orig 2 litre bottle",
+    "barcode": null,
+    "expectedProductId": "softdrink-coke-original-2l",
+    "expectedStatus": "requires_confirmation"
+  },
+  {
+    "caseId": "barcode-milk",
+    "rawProductName": "Fresh full cream dairy",
+    "barcode": "6001299011023",
+    "expectedProductId": "milk-clover-fullcream-2l",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "alias-milk",
+    "rawProductName": "Clover Milk Full Cream 2 litre",
+    "barcode": null,
+    "expectedProductId": "milk-clover-fullcream-2l",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "fuzzy-milk",
+    "rawProductName": "Clover fullcream 2 litre milk",
+    "barcode": null,
+    "expectedProductId": "milk-clover-fullcream-2l",
+    "expectedStatus": "requires_confirmation"
+  },
+  {
+    "caseId": "barcode-maize",
+    "rawProductName": "Staple food bag",
+    "barcode": "6001205005016",
+    "expectedProductId": "maize-super-5kg",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "alias-maize",
+    "rawProductName": "Super Maize 5000g",
+    "barcode": null,
+    "expectedProductId": "maize-super-5kg",
+    "expectedStatus": "auto_confirmed"
+  },
+  {
+    "caseId": "unmatched",
+    "rawProductName": "Premium corn flakes 750g",
+    "barcode": null,
+    "expectedProductId": null,
+    "expectedStatus": "unmatched"
+  }
+]

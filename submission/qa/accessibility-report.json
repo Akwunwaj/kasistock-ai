@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-07-18T09:03:14.785Z",
+  "mode": "offline server-rendered DOM",
+  "standard": "WCAG 2 A/AA and WCAG 2.1 A/AA",
+  "routes": [
+    {
+      "route": "/",
+      "violations": []
+    },
+    {
+      "route": "/judge",
+      "violations": []
+    },
+    {
+      "route": "/submission-preview/evidence",
+      "violations": []
+    },
+    {
+      "route": "/submission-preview/approved",
+      "violations": []
+    },
+    {
+      "route": "/architecture",
+      "violations": []
+    }
+  ],
+  "violationCount": 0,
+  "passed": true
+}

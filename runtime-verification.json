@@ -1,0 +1,218 @@
+{
+  "release": "0.5.0",
+  "generatedAt": "2026-07-18T09:08:37.193715+00:00",
+  "toolchain": {
+    "node": "24.15.0",
+    "npm": "11.12.1"
+  },
+  "production": {
+    "routeStatuses": {
+      "/": 200,
+      "/judge": 200,
+      "/evidence": 200,
+      "/decision": 200,
+      "/architecture": 200,
+      "/submission-preview/evidence": 200,
+      "/submission-preview/approved": 200,
+      "/api/health": 200,
+      "/api/readiness": 200,
+      "/opengraph-image": 200,
+      "/manifest.webmanifest": 200,
+      "/robots.txt": 200,
+      "/sitemap.xml": 200
+    },
+    "readiness": {
+      "service": "kasistock-ai",
+      "status": "ready",
+      "checks": {
+        "openaiApiKey": true,
+        "openaiModel": true,
+        "evidenceSigningSecret": true,
+        "applicationBaseUrl": true
+      },
+      "timestamp": "2026-07-18T09:08:37.179Z"
+    },
+    "securityHeaders": {
+      "cross-origin-opener-policy": "same-origin",
+      "permissions-policy": "camera=(), geolocation=(), microphone=()",
+      "referrer-policy": "strict-origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY"
+    }
+  },
+  "accessibility": {
+    "mode": "offline server-rendered DOM",
+    "standard": "WCAG 2 A/AA and WCAG 2.1 A/AA",
+    "routesAudited": 5,
+    "violationCount": 0,
+    "passed": true
+  },
+  "submissionAssets": {
+    "viewport": "1440x900",
+    "screenshots": [
+      {
+        "name": "01-home-dashboard.png",
+        "bytes": 256068,
+        "sha256": "decd7561dadd6dc6fc24ae002f39ea2f743a961c9cc858bc14af66f50ed081ef"
+      },
+      {
+        "name": "02-human-evidence-review.png",
+        "bytes": 158712,
+        "sha256": "7d374cb3b9311ad47fa2bfbc85eb708209b40244e7190cb78532c4b8c81310e3"
+      },
+      {
+        "name": "03-approved-supplier-orders.png",
+        "bytes": 136374,
+        "sha256": "9e38215a5751843eae382ad6613992a38d2cd6984781a57568b337358709e0a5"
+      },
+      {
+        "name": "04-trust-boundaries.png",
+        "bytes": 166533,
+        "sha256": "a6221b43b7ef7799c20f46aaec45aacb358d755fd05c4e6558c055e4155bcadc"
+      }
+    ],
+    "draftVideo": {
+      "path": "submission/video/kasistock-ai-demo-draft.mp4",
+      "bytes": 324928,
+      "sha256": "5587e9e65cdf6d76451370c8874e123c34c53d2c389831bb1ea1d3f7942189e4"
+    }
+  },
+  "coreAuthorityWorkflow": {
+    "runtimeNode": "24.15.0",
+    "runtimeNpm": "11.12.1",
+    "homeStatus": 200,
+    "decisionStatus": 200,
+    "proposalStatus": 200,
+    "acceptedSnapshots": 4,
+    "productLabels": 16,
+    "mappingStatus": 201,
+    "mappingDecisions": 16,
+    "restockStatus": 200,
+    "restockCandidates": 4,
+    "selectedLines": 3,
+    "draftStatus": 201,
+    "draftTotalCents": 139910,
+    "draftRemainingCents": 10090,
+    "approvalStatus": 201,
+    "supplierPurchaseOrders": 2,
+    "purchaseOrderNumbers": [
+      "KSI-20260718-METRO-CASH-CARRY-01",
+      "KSI-20260718-UBUNTU-WHOLESALE-F-02"
+    ],
+    "supplierMessages": 2,
+    "auditEvents": 6,
+    "pdfStatus": 200,
+    "pdfBytes": 4507,
+    "pdfContentType": "application/pdf",
+    "tamperedDraftStatus": 400,
+    "tamperedDraftCode": "INVALID_DRAFT_SIGNATURE",
+    "evaluationStatus": 200,
+    "evaluation": {
+      "datasetVersion": "product-matching-v1",
+      "totalCases": 12,
+      "productAccuracyPercent": 91.67,
+      "authorityAccuracyPercent": 91.67,
+      "unsafeAutoMergeCount": 0,
+      "passedCases": 11,
+      "cases": [
+        {
+          "caseId": "barcode-bread",
+          "expectedProductId": "bread-albany-white-700g",
+          "actualProductId": "bread-albany-white-700g",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "alias-bread",
+          "expectedProductId": "bread-albany-white-700g",
+          "actualProductId": "bread-albany-white-700g",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "normalised-bread",
+          "expectedProductId": "bread-albany-white-700g",
+          "actualProductId": "bread-albany-white-700g",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "barcode-coke",
+          "expectedProductId": "softdrink-coke-original-2l",
+          "actualProductId": "softdrink-coke-original-2l",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "alias-coke",
+          "expectedProductId": "softdrink-coke-original-2l",
+          "actualProductId": "softdrink-coke-original-2l",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "fuzzy-coke",
+          "expectedProductId": "softdrink-coke-original-2l",
+          "actualProductId": null,
+          "expectedStatus": "requires_confirmation",
+          "actualStatus": "unmatched",
+          "passed": false
+        },
+        {
+          "caseId": "barcode-milk",
+          "expectedProductId": "milk-clover-fullcream-2l",
+          "actualProductId": "milk-clover-fullcream-2l",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "alias-milk",
+          "expectedProductId": "milk-clover-fullcream-2l",
+          "actualProductId": "milk-clover-fullcream-2l",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "fuzzy-milk",
+          "expectedProductId": "milk-clover-fullcream-2l",
+          "actualProductId": "milk-clover-fullcream-2l",
+          "expectedStatus": "requires_confirmation",
+          "actualStatus": "requires_confirmation",
+          "passed": true
+        },
+        {
+          "caseId": "barcode-maize",
+          "expectedProductId": "maize-super-5kg",
+          "actualProductId": "maize-super-5kg",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "alias-maize",
+          "expectedProductId": "maize-super-5kg",
+          "actualProductId": "maize-super-5kg",
+          "expectedStatus": "auto_confirmed",
+          "actualStatus": "auto_confirmed",
+          "passed": true
+        },
+        {
+          "caseId": "unmatched",
+          "expectedProductId": null,
+          "actualProductId": null,
+          "expectedStatus": "unmatched",
+          "actualStatus": "unmatched",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "kasistock-ai",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Explainable multimodal evidence and budget-constrained restocking intelligence for small retailers.",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build",
+    "evals": "vitest run tests/evals/product-matching-eval.test.ts",
+    "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
+    "capture:submission": "node scripts/capture-submission-assets.mjs",
+    "validate:env": "node scripts/validate-production-env.mjs",
+    "validate:openai": "node scripts/validate-live-openai.mjs",
+    "verify:submission": "npm run verify && npm run test:e2e && npm run capture:submission",
+    "audit:a11y": "node scripts/audit-static-pages.mjs",
+    "verify:offline-submission": "npm run verify && npm run audit:a11y && npm run capture:submission"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "openai": "6.48.0",
+    "pdf-lib": "1.17.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.2.10",
+    "prettier": "3.9.5",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10",
+    "@axe-core/playwright": "4.12.1"
+  },
+  "packageManager": "npm@11.12.1"
+}

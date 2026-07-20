@@ -1,0 +1,56 @@
+import type { CanonicalProduct } from "@/modules/catalogue/domain/product";
+
+export const canonicalProducts: readonly CanonicalProduct[] = [
+  {
+    productId: "bread-albany-white-700g",
+    displayName: "Albany Superior White Bread 700g",
+    unitLabel: "700g loaf",
+    barcodes: ["6001007001018"],
+    aliases: [
+      "Albany White Bread 700g",
+      "Albany Superior White 700g",
+      "Albany Superior White Bread 700 gram",
+    ],
+    targetDaysCover: 4,
+    safetyStockUnits: 8,
+    essentialityScore: 10,
+    expiryRiskScore: 7,
+  },
+  {
+    productId: "softdrink-coke-original-2l",
+    displayName: "Coca-Cola Original Taste 2L",
+    unitLabel: "2L bottle",
+    barcodes: ["5449000000996"],
+    aliases: ["Coca Cola Original 2L", "Coke Original PET 2L", "Coca-Cola Original Taste 2000ml"],
+    targetDaysCover: 5,
+    safetyStockUnits: 6,
+    essentialityScore: 6,
+    expiryRiskScore: 1,
+  },
+  {
+    productId: "milk-clover-fullcream-2l",
+    displayName: "Clover Full Cream Milk 2L",
+    unitLabel: "2L bottle",
+    barcodes: ["6001299011023"],
+    aliases: [
+      "Clover Full Cream 2L",
+      "Clover Milk Full Cream 2 litre",
+      "Clover Fullcream Milk 2000ml",
+    ],
+    targetDaysCover: 4,
+    safetyStockUnits: 6,
+    essentialityScore: 9,
+    expiryRiskScore: 8,
+  },
+  {
+    productId: "maize-super-5kg",
+    displayName: "Super Maize Meal 5kg",
+    unitLabel: "5kg bag",
+    barcodes: ["6001205005016"],
+    aliases: ["Super Maize Meal 5kg", "Maize Meal Super 5 KG", "Super Maize 5000g"],
+    targetDaysCover: 7,
+    safetyStockUnits: 3,
+    essentialityScore: 10,
+    expiryRiskScore: 2,
+  },
+] as const;
