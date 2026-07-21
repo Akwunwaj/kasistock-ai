@@ -26,7 +26,7 @@ ESLint, zero warnings:               PASSED
 Next route type generation:          PASSED
 TypeScript strict checking:          PASSED
 Normal test files:                   18 passed, 1 conditional DB test skipped
-Normal tests:                        37 passed, 1 conditional DB test skipped
+Normal tests:                        38 passed, 1 conditional DB test skipped
 Next.js production build:            PASSED (23 routes)
 Product matching eval:               PASSED (91.67%, 0 unsafe automatic merges)
 git diff --check:                    PASSED
@@ -92,22 +92,45 @@ Shelf products / supplier offers:     3 / 3
 Raw supplier date:                    2007-03-20 (incorrect, left unaccepted)
 ```
 
+### Evidence extraction timeout remediation
+
+Production runtime evidence on 21 July showed `/api/extractions` being terminated at its explicit
+60-second Vercel limit, which returned plain text and caused the browser's JSON parse error. The
+route limit is now 300 seconds, OpenAI calls are bounded to 240 seconds with one retry, and the
+evidence-only request uses low reasoning effort while preserving high-detail vision, `store: false`,
+the exact `gpt-5.6-sol` identifier and the strict extraction contracts.
+
+```text
+Screenshot image payload:            HTTP 200 in 8,657 ms
+Known synthetic shelf fixture:       HTTP 200 in 9,970 ms
+Synthetic products:                  KASI MAIZE / KASI BEANS / KASI OIL
+Model / mode:                         gpt-5.6-sol / live
+Persistence:                          postgresql, durable=true
+Post-fix route timeouts:              0 observed
+```
+
+The supplied attachment was the UI error screenshot rather than the original `Shelf_image_1.png`;
+the screenshot therefore validated image transport and the synthetic fixture validated extraction
+quality. Neither raw extraction was human-accepted.
+
 ## Browser and accessibility QA
 
 System Chrome was used through Playwright because managed Chromium download was unavailable.
 
 ```text
 Production Playwright, PostgreSQL:    8 passed
-Production Playwright, fallback:      8 passed
+Production Playwright, fallback:      9 passed
 axe WCAG A/AA checks per run:         5 passed, 0 violations
 Desktop in-app browser review:        PASSED
 375 px mobile in-app review:          PASSED, no horizontal overflow
 Browser console errors/warnings:      0
-Live production Playwright:           8 passed
+Live production Playwright post-fix:  8/9 passed
 ```
 
 Browser QA found and fixed one 4.36:1 muted-text contrast failure and a mobile navigation rule that
-hid all primary links below 720 pixels.
+hid all primary links below 720 pixels. The post-fix live run passed every evidence and accessibility
+test; the separate decision flow received HTTP 503 from `/api/product-mappings` and remains an
+explicit persistence blocker rather than being reported as passed.
 
 ## Security checks
 
