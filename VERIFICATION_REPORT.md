@@ -55,6 +55,10 @@ The real-database run found and fixed two defects that mocked tests did not reve
 explicit JSON serialisation for `jsonb`, and same-day purchase-order numbers needed a draft-hash
 component to avoid unique-key collisions.
 
+The production Neon resource was provisioned through Vercel. Migration
+`001_initial_f2aa9e581069a868` reported `applied=true` on the first run and `applied=false` on the
+second. A remote Neon integration run passed 1/1 with a 30-second allowance for network latency.
+
 ## Live OpenAI validation
 
 Current official guidance identifies `gpt-5.6-sol` as the explicit flagship model. The configured
@@ -77,6 +81,17 @@ raw model result was preserved and a separate accepted snapshot corrected the da
 review endpoint. Safe IDs, hashes, expected values, and the correction are recorded in
 `submission/qa/live-openai-validation.json`.
 
+Production extraction-only validation then reconfirmed the deployed key and exact model identifier
+without creating accepted evidence:
+
+```text
+Shelf response ID:                    resp_0742af2ba8f74922016a5f35d0d6448192b017e50286ebfc11
+Supplier response ID:                 resp_0f4f6b4cda005e88016a5f35db8104819292824c6e069a2a98
+Model/mode/persistence:               gpt-5.6-sol / live / postgresql
+Shelf products / supplier offers:     3 / 3
+Raw supplier date:                    2007-03-20 (incorrect, left unaccepted)
+```
+
 ## Browser and accessibility QA
 
 System Chrome was used through Playwright because managed Chromium download was unavailable.
@@ -88,6 +103,7 @@ axe WCAG A/AA checks per run:         5 passed, 0 violations
 Desktop in-app browser review:        PASSED
 375 px mobile in-app review:          PASSED, no horizontal overflow
 Browser console errors/warnings:      0
+Live production Playwright:           8 passed
 ```
 
 Browser QA found and fixed one 4.36:1 muted-text contrast failure and a mobile navigation rule that
@@ -101,6 +117,24 @@ hid all primary links below 720 pixels.
 - HMAC tamper rejection and server-side draft reconstruction: passing tests.
 - `npm audit --omit=dev`: 0 high, 0 critical, 2 moderate transitive findings.
 - Secrets remain ignored; no plaintext OpenAI key was read or printed.
+- The live deployment returns HSTS, `nosniff`, deny-framing, same-origin opener, restrictive
+  permissions and strict-origin referrer headers. Content Security Policy remains a documented
+  post-submission hardening gap.
+
+## GitHub and production deployment
+
+```text
+Repository:                           https://github.com/Akwunwaj/kasistock-ai
+Visibility / licence:                 private / none (owner decision)
+Portable-install pull request:        https://github.com/Akwunwaj/kasistock-ai/pull/1
+GitHub Actions run:                   https://github.com/Akwunwaj/kasistock-ai/actions/runs/29816237274
+Quality / browser jobs:               passed / passed
+Production commit:                    33eb68da72deffb236a3cde29503015cca9ca337
+Production URL:                       https://kasistock-ai.vercel.app
+Vercel deployment:                    ready (48-second build)
+Readiness / health / home:            HTTP 200 / HTTP 200 / HTTP 200
+Persistence:                          postgresql, configured=true, reachable=true
+```
 
 ## Generated validation fixtures
 
@@ -129,16 +163,14 @@ Three-minute requirement:            passed
 
 ## Not yet complete
 
-- GitHub publication and repository visibility/licensing decision.
-- Vercel project creation, production database, environment variables and deployment.
-- Production URL browser/security QA.
 - Primary Codex `/feedback` submission ID; `/feedback` is an interactive app dialog and no callable
   feedback tool is exposed in this task.
+- Judge access to the private repository must be granted if the competition requires source review.
 - Final narrated video is locally complete; YouTube upload and Devpost submission remain external.
 
 ## Current result
 
 ```text
-LOCAL ENGINEERING AND LIVE MODEL VALIDATION: PASSED
-EXTERNAL PUBLICATION AND SUBMISSION: PENDING USER DECISION / ACCOUNT ACTIONS
+ENGINEERING, CI, DEPLOYMENT AND LIVE VALIDATION: PASSED
+YOUTUBE, CODEX FEEDBACK ID AND DEVPOST SUBMISSION: PENDING
 ```

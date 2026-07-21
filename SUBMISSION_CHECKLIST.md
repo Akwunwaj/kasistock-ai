@@ -2,7 +2,7 @@
 
 ## Product
 
-- [ ] Public or judge-accessible deployed application.
+- [x] Public or judge-accessible deployed application.
 - [x] Zero-sign-up judge guide and one-click seeded demonstration path.
 - [x] Shelf-image and supplier PDF/image extraction contracts.
 - [x] Deterministic sales-history CSV ingestion.
@@ -31,6 +31,7 @@
 - [x] Five-surface Playwright axe audit with zero WCAG A/AA violations.
 - [x] GitHub Actions workflow for quality and Playwright browser checks.
 - [x] Run full interactive Playwright suite against PostgreSQL and fallback production modes.
+- [x] Run the complete Playwright suite against the live Vercel deployment.
 - [ ] Record the primary Codex `/feedback` session ID.
 
 ## Submission assets
@@ -44,6 +45,6 @@
 - [x] Produce the captioned final narrated demonstration under three minutes (2:33.7 locally).
 - [ ] Publish the final narrated demonstration to YouTube.
 - [ ] Publish or share the repository with the judges.
-- [ ] Add deployment, repository, YouTube and Codex-session links.
+- [ ] Add remaining YouTube and Codex-session links (deployment and repository links recorded).
 - [ ] Test every public link in a private browser window.
 - [ ] Submit the Devpost entry before the official deadline.

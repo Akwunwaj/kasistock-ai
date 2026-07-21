@@ -1,5 +1,10 @@
 # KasiStock AI
 
+Live demonstration: https://kasistock-ai.vercel.app
+
+The source repository is intentionally private with no licence, per the owner's publication
+decision.
+
 **Turn limited cash into the right stock.**
 
 KasiStock AI is an OpenAI Build Week application for cash-constrained small retailers. It turns

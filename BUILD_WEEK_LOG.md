@@ -142,3 +142,21 @@ Use this log together with Git history and Codex session evidence.
 ### Primary Codex `/feedback` session ID
 
 `PENDING_INTERACTIVE_FEEDBACK_DIALOG`
+
+## 21 July 2026 — private publication and production validation
+
+- Published the continuation to the private, no-licence GitHub repository at
+  `https://github.com/Akwunwaj/kasistock-ai`.
+- Provisioned Neon through the Vercel Marketplace, applied migration
+  `001_initial_f2aa9e581069a868`, and proved the second migration run was idempotent.
+- Found 489 lockfile tarball URLs pointing to an inaccessible internal package mirror, replaced
+  only the registry host with the public npm registry, and preserved every version and integrity
+  hash.
+- Proved the repair with a clean npm 11.12.1 install, green GitHub quality/browser jobs, and a
+  successful Vercel build.
+- Merged private pull request `#1` as production commit `33eb68d`.
+- Deployed `https://kasistock-ai.vercel.app`; readiness reports OpenAI configured and PostgreSQL
+  configured/reachable.
+- Passed 8/8 Playwright tests against the live deployment, including five WCAG A/AA surfaces.
+- Revalidated the exact `gpt-5.6-sol` identifier through production extraction calls. The raw
+  supplier result misread the fixture date as `2007-03-20`; it was deliberately left unaccepted.
