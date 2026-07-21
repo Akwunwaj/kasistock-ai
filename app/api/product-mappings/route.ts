@@ -37,15 +37,27 @@ export async function POST(request: Request) {
       error instanceof ReconciliationEvidenceError ||
       error instanceof ProductMappingAcceptanceError
     ) {
-      return errorResponse(400, error.code, error.message);
+      return errorResponse(
+        400,
+        error.code,
+        error.message,
+        error instanceof ProductMappingAcceptanceError && error.sourceKey
+          ? { sourceKey: error.sourceKey, field: error.field }
+          : undefined,
+      );
     }
     console.error("Product mapping acceptance failed", safeErrorMetadata(error));
     return errorResponse(400, "INVALID_MAPPING_REQUEST", "The product mapping request is invalid.");
   }
 }
 
-function errorResponse(status: number, code: string, message: string) {
-  return NextResponse.json({ error: { code, message } }, { status });
+function errorResponse(
+  status: number,
+  code: string,
+  message: string,
+  details?: { sourceKey: string; field?: string },
+) {
+  return NextResponse.json({ error: { code, message, details } }, { status });
 }
 
 function safeErrorMetadata(error: unknown) {

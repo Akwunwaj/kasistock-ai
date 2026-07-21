@@ -50,4 +50,31 @@ describe("buildAcceptedProductMappingSet", () => {
       }),
     ).toThrowError(ProductMappingAcceptanceError);
   });
+
+  it("identifies the source product when a mapping field is invalid", () => {
+    const snapshots = createDemoAcceptedEvidenceBundle();
+    const decisions = acceptedDecisions();
+    const firstDecision = decisions[0];
+    if (!firstDecision) throw new Error("Expected a demo mapping decision.");
+    const invalidDecisions: unknown[] = [
+      { ...firstDecision, confirmed: false },
+      ...decisions.slice(1),
+    ];
+
+    try {
+      buildAcceptedProductMappingSet({
+        snapshots,
+        decisions: invalidDecisions,
+        products: canonicalProducts,
+        acceptedBy: "merchant",
+      });
+      throw new Error("Expected mapping validation to fail.");
+    } catch (error) {
+      expect(error).toBeInstanceOf(ProductMappingAcceptanceError);
+      const mappingError = error as ProductMappingAcceptanceError;
+      expect(mappingError.code).toBe("INVALID_DECISION");
+      expect(mappingError.sourceKey).toBe(firstDecision.sourceKey);
+      expect(mappingError.field).toBe("confirmed");
+    }
+  });
 });

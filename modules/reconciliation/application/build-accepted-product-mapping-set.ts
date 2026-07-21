@@ -12,8 +12,14 @@ import { computeProductMappingHash } from "./product-mapping-hash";
 export class ProductMappingAcceptanceError extends Error {
   constructor(
     public readonly code:
-      "INCOMPLETE_MAPPING" | "UNKNOWN_SOURCE" | "UNKNOWN_PRODUCT" | "DUPLICATE_DECISION",
+      | "INCOMPLETE_MAPPING"
+      | "UNKNOWN_SOURCE"
+      | "UNKNOWN_PRODUCT"
+      | "DUPLICATE_DECISION"
+      | "INVALID_DECISION",
     message: string,
+    public readonly sourceKey?: string,
+    public readonly field?: string,
   ) {
     super(message);
     this.name = "ProductMappingAcceptanceError";
@@ -32,7 +38,31 @@ export function buildAcceptedProductMappingSet(
   input: BuildMappingSetInput,
 ): AcceptedProductMappingSet {
   const records = extractSourceProductRecords(input.snapshots);
-  const decisions = productMappingDecisionSchema.array().parse(input.decisions);
+  const parsedDecisions = productMappingDecisionSchema.array().safeParse(input.decisions);
+  if (!parsedDecisions.success) {
+    const issue = parsedDecisions.error.issues[0];
+    const decisionIndex = typeof issue?.path[0] === "number" ? issue.path[0] : undefined;
+    const sourceKey =
+      decisionIndex === undefined || !Array.isArray(input.decisions)
+        ? undefined
+        : sourceKeyAt(input.decisions[decisionIndex]);
+    const source = records.find((record) => record.sourceKey === sourceKey);
+    const pathTail = issue?.path.at(-1);
+    const field = typeof pathTail === "string" ? pathTail : "decision";
+    const mappingLabel = source
+      ? `the mapping for “${source.rawProductName}”`
+      : decisionIndex === undefined
+        ? "the mapping request"
+        : `mapping row ${decisionIndex + 1}`;
+
+    throw new ProductMappingAcceptanceError(
+      "INVALID_DECISION",
+      `${mappingLabel} has an invalid ${field}: ${issue?.message ?? "invalid value"}.`,
+      sourceKey,
+      field,
+    );
+  }
+  const decisions = parsedDecisions.data;
   const sourceKeys = new Set(records.map((record) => record.sourceKey));
   const productIds = new Set(input.products.map((product) => product.productId));
   const seen = new Set<string>();
@@ -89,4 +119,16 @@ export function buildAcceptedProductMappingSet(
     ...hashSource,
     mappingHash: computeProductMappingHash(hashSource),
   });
+}
+
+function sourceKeyAt(value: unknown): string | undefined {
+  if (
+    typeof value === "object" &&
+    value !== null &&
+    "sourceKey" in value &&
+    typeof value.sourceKey === "string"
+  ) {
+    return value.sourceKey;
+  }
+  return undefined;
 }

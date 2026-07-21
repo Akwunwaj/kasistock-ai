@@ -48,6 +48,11 @@ interface EvaluationResponse {
   passedCases: number;
 }
 
+interface MappingErrorDetails {
+  sourceKey?: string;
+  field?: string;
+}
+
 export function DecisionWorkbench() {
   const [snapshots, setSnapshots] = useState<AcceptedEvidenceSnapshot[]>([]);
   const [products, setProducts] = useState<CanonicalProduct[]>([]);
@@ -61,6 +66,7 @@ export function DecisionWorkbench() {
     "idle",
   );
   const [error, setError] = useState<string | null>(null);
+  const [mappingError, setMappingError] = useState<MappingErrorDetails | null>(null);
   const [proposalMode, setProposalMode] = useState<string>("deterministic");
   const [orderSelections, setOrderSelections] = useState<Record<string, number>>({});
   const [draftEnvelope, setDraftEnvelope] = useState<SignedPurchaseOrderDraft | null>(null);
@@ -95,6 +101,7 @@ export function DecisionWorkbench() {
   async function loadPreparedEvidence() {
     setStatus("loading");
     setError(null);
+    setMappingError(null);
     try {
       const response = await fetch("/api/reconciliation/proposals");
       const body = (await response.json()) as ProposalResponse;
@@ -112,6 +119,7 @@ export function DecisionWorkbench() {
   async function loadBrowserEvidence() {
     setStatus("loading");
     setError(null);
+    setMappingError(null);
     try {
       const stored = JSON.parse(
         window.localStorage.getItem("kasistock.acceptedSnapshots") ?? "[]",
@@ -170,6 +178,7 @@ export function DecisionWorkbench() {
     if (snapshots.length === 0) return;
     setStatus("gpt");
     setError(null);
+    setMappingError(null);
     try {
       const response = await fetch("/api/reconciliation/proposals", {
         method: "POST",
@@ -192,6 +201,7 @@ export function DecisionWorkbench() {
     if (pendingConfirmations > 0) return;
     setStatus("accepting");
     setError(null);
+    setMappingError(null);
     try {
       const decisions = proposals.map((proposal) => {
         const productId = selections[proposal.source.sourceKey] ?? null;
@@ -227,9 +237,10 @@ export function DecisionWorkbench() {
       });
       const body = (await response.json()) as {
         mappingSet?: AcceptedProductMappingSet;
-        error?: { message?: string };
+        error?: { message?: string; details?: MappingErrorDetails };
       };
       if (!response.ok || !body.mappingSet) {
+        setMappingError(body.error?.details ?? null);
         throw new Error(body.error?.message ?? "Product mappings could not be accepted.");
       }
       setMappingSet(body.mappingSet);
@@ -500,7 +511,11 @@ export function DecisionWorkbench() {
                 (candidate) => candidate.productId === selected,
               );
               return (
-                <article className="mappingRow" role="row" key={proposal.source.sourceKey}>
+                <article
+                  className={`mappingRow ${mappingError?.sourceKey === proposal.source.sourceKey ? "mappingRowError" : ""}`}
+                  role="row"
+                  key={proposal.source.sourceKey}
+                >
                   <div>
                     <span className={`sourceKind ${proposal.source.kind}`}>
                       {sourceKindLabel(proposal.source.kind)}
@@ -526,6 +541,9 @@ export function DecisionWorkbench() {
                           ...current,
                           [proposal.source.sourceKey]: productId,
                         }));
+                        if (mappingError?.sourceKey === proposal.source.sourceKey) {
+                          setMappingError(null);
+                        }
                         if (requiresConfirmation) {
                           setConfirmed((current) => {
                             const next = new Set(current);
@@ -542,6 +560,11 @@ export function DecisionWorkbench() {
                         </option>
                       ))}
                     </select>
+                    {mappingError?.sourceKey === proposal.source.sourceKey ? (
+                      <small className="inlineError" role="alert">
+                        This mapping needs attention: {mappingError.field ?? "invalid value"}.
+                      </small>
+                    ) : null}
                     <small>
                       {lead
                         ? `${matchMethodLabel(lead.method)} · ${(lead.scoreBasisPoints / 100).toFixed(1)}%`

@@ -1075,6 +1075,13 @@ main {
   padding: 16px 20px;
   border-top: 1px solid #edf2ef;
 }
+.mappingRowError {
+  background: #fff7f5;
+  box-shadow: inset 4px 0 0 #b84a2a;
+}
+.mappingRowError select {
+  border-color: #b84a2a;
+}
 .mappingRow:first-of-type {
   border-top: 0;
 }
