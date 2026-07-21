@@ -15,6 +15,7 @@ test("prepared extraction can be reviewed and accepted", async ({ page }) => {
   await expect(
     page.getByText("Human-accepted evidence is ready for product reconciliation."),
   ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Accept evidence snapshot" })).toBeDisabled();
 });
 
 test("live extraction reports a friendly timeout when the platform returns plain text", async ({

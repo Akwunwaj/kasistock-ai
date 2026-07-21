@@ -5,7 +5,10 @@ import {
 } from "@/modules/evidence/application/build-accepted-evidence-snapshot";
 import { extractionEnvelopeSchema } from "@/modules/evidence/domain/contracts";
 import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
-import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
+import {
+  WorkflowPersistenceConflictError,
+  WorkflowPersistenceError,
+} from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -20,10 +23,17 @@ export async function POST(request: Request) {
       acceptedBy: typeof body.acceptedBy === "string" ? body.acceptedBy : "demo-merchant",
     });
     const envelope = extractionEnvelopeSchema.parse(body.envelope);
-    const persistence = await getWorkflowPersistence().recordAcceptedEvidence(envelope, snapshot);
-    return NextResponse.json({ snapshot, persistence }, { status: 201 });
+    const result = await getWorkflowPersistence().recordAcceptedEvidence(envelope, snapshot);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
+    if (error instanceof WorkflowPersistenceConflictError) {
+      return NextResponse.json(
+        { error: { code: "EVIDENCE_ALREADY_ACCEPTED", message: error.message } },
+        { status: 409 },
+      );
+    }
     if (error instanceof WorkflowPersistenceError) {
+      console.error("Evidence persistence failed", safePersistenceErrorMetadata(error));
       return NextResponse.json(
         { error: { code: "PERSISTENCE_UNAVAILABLE", message: error.message } },
         { status: 503 },
@@ -46,6 +56,18 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+}
+
+function safePersistenceErrorMetadata(error: WorkflowPersistenceError) {
+  const cause = error.cause;
+  if (!(cause instanceof Error)) return { name: error.name };
+  const databaseCause = cause as Error & { code?: string; constraint?: string };
+  return {
+    name: databaseCause.name,
+    message: databaseCause.message,
+    ...(databaseCause.code ? { code: databaseCause.code } : {}),
+    ...(databaseCause.constraint ? { constraint: databaseCause.constraint } : {}),
+  };
 }
 
 function safeErrorMetadata(error: unknown) {

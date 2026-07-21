@@ -18,6 +18,11 @@ export interface PersistenceReceipt {
   scenarioId?: string;
 }
 
+export interface AcceptedEvidencePersistenceResult {
+  snapshot: AcceptedEvidenceSnapshot;
+  persistence: PersistenceReceipt;
+}
+
 export interface RestockScenarioRecord {
   snapshots: readonly AcceptedEvidenceSnapshot[];
   mappingSet: AcceptedProductMappingSet;
@@ -33,7 +38,7 @@ export interface WorkflowPersistence {
   recordAcceptedEvidence(
     envelope: ExtractionEnvelope,
     snapshot: AcceptedEvidenceSnapshot,
-  ): Promise<PersistenceReceipt>;
+  ): Promise<AcceptedEvidencePersistenceResult>;
   recordProductMappingSet(
     mappingSet: AcceptedProductMappingSet,
     snapshots?: readonly AcceptedEvidenceSnapshot[],
@@ -50,6 +55,13 @@ export class WorkflowPersistenceError extends Error {
   }
 }
 
+export class WorkflowPersistenceConflictError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "WorkflowPersistenceConflictError";
+  }
+}
+
 export class PreparedFallbackPersistence implements WorkflowPersistence {
   readonly mode = "prepared_fallback" as const;
 
@@ -61,8 +73,11 @@ export class PreparedFallbackPersistence implements WorkflowPersistence {
     return this.receipt();
   }
 
-  async recordAcceptedEvidence(): Promise<PersistenceReceipt> {
-    return this.receipt();
+  async recordAcceptedEvidence(
+    _envelope: ExtractionEnvelope,
+    snapshot: AcceptedEvidenceSnapshot,
+  ): Promise<AcceptedEvidencePersistenceResult> {
+    return { snapshot, persistence: this.receipt() };
   }
 
   async recordProductMappingSet(): Promise<PersistenceReceipt> {
