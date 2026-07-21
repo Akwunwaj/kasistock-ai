@@ -27,8 +27,29 @@ describe("OpenAIExtractionGateway", () => {
     const request = parse.mock.calls[0]?.[0] as Record<string, unknown>;
     expect(request.model).toBe("gpt-5.6-sol");
     expect(request.store).toBe(false);
+    expect(request.reasoning).toEqual({ effort: "low" });
     expect(request.text).toBeDefined();
     expect(JSON.stringify(request.input)).toContain("data:image/png;base64,iVBORw0KGgo=");
+  });
+
+  it("reports why a structured response is incomplete", async () => {
+    const parse = vi.fn().mockResolvedValue({
+      id: "resp_incomplete",
+      status: "incomplete",
+      incomplete_details: { reason: "max_output_tokens" },
+      output_parsed: null,
+      output: [],
+    });
+    const client = { responses: { parse } } as unknown as OpenAI;
+    const gateway = new OpenAIExtractionGateway(client, "gpt-5.6-sol");
+
+    await expect(
+      gateway.extractShelf({
+        filename: "shelf.png",
+        mimeType: "image/png",
+        base64Data: "iVBORw0KGgo=",
+      }),
+    ).rejects.toThrow("gpt-5.6-sol returned an incomplete shelf extraction (max_output_tokens).");
   });
 
   it("encodes PDF evidence as a data URI for the Responses API", async () => {

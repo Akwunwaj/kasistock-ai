@@ -29,7 +29,7 @@ export class OpenAIExtractionGateway implements ExtractionGateway {
     const response = await this.client.responses.parse({
       model: this.model,
       store: false,
-      reasoning: { effort: "medium" },
+      reasoning: { effort: "low" },
       max_output_tokens: 4000,
       input: [
         {
@@ -57,7 +57,7 @@ export class OpenAIExtractionGateway implements ExtractionGateway {
     });
 
     if (!response.output_parsed) {
-      throw new Error("GPT-5.6 returned no parsed shelf extraction.");
+      throw new Error(missingParsedOutputMessage(this.model, "shelf extraction", response));
     }
 
     return { output: response.output_parsed, responseId: response.id, model: this.model };
@@ -69,7 +69,7 @@ export class OpenAIExtractionGateway implements ExtractionGateway {
     const response = await this.client.responses.parse({
       model: this.model,
       store: false,
-      reasoning: { effort: "medium" },
+      reasoning: { effort: "low" },
       max_output_tokens: 7000,
       input: [
         {
@@ -104,9 +104,43 @@ export class OpenAIExtractionGateway implements ExtractionGateway {
     });
 
     if (!response.output_parsed) {
-      throw new Error("GPT-5.6 returned no parsed supplier-catalogue extraction.");
+      throw new Error(
+        missingParsedOutputMessage(this.model, "supplier-catalogue extraction", response),
+      );
     }
 
     return { output: response.output_parsed, responseId: response.id, model: this.model };
   }
+}
+
+function missingParsedOutputMessage(
+  model: string,
+  evidenceType: string,
+  response: {
+    status?: string;
+    incomplete_details?: { reason?: string } | null;
+    output?: unknown[];
+  },
+): string {
+  if (response.status === "incomplete") {
+    const reason = response.incomplete_details?.reason ?? "unknown reason";
+    return `${model} returned an incomplete ${evidenceType} (${reason}).`;
+  }
+
+  const refused = response.output?.some((item) => {
+    if (!item || typeof item !== "object" || !("content" in item)) return false;
+    const content = item.content;
+    return (
+      Array.isArray(content) &&
+      content.some(
+        (part) =>
+          part !== null && typeof part === "object" && "type" in part && part.type === "refusal",
+      )
+    );
+  });
+  if (refused) {
+    return `${model} declined the ${evidenceType}.`;
+  }
+
+  return `${model} returned no parsed ${evidenceType}.`;
 }
