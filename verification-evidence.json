@@ -1,6 +1,6 @@
 {
   "release": "0.5.0-codex-continuation",
-  "generatedAt": "2026-07-21T07:09:18.089Z",
+  "generatedAt": "2026-07-21T09:04:19.415Z",
   "baseline": {
     "archive": "kasistock-ai-build-week-submission-v0.5.0.zip",
     "sha256": "44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29",
@@ -34,8 +34,9 @@
     "accessibility": "passed_5_surfaces_zero_wcag_a_aa_violations",
     "liveOpenAI": "passed_gpt_5_6_sol",
     "finalNarratedVideo": "passed_153_7_seconds_captioned",
-    "githubPublication": "pending_visibility_and_licensing_decision",
-    "vercelDeployment": "pending_external_publication",
+    "liveProductionPlaywright": "passed_8_of_8",
+    "githubPublication": "passed_private_no_licence",
+    "vercelDeployment": "passed_ready_production",
     "youtubePublication": "pending_external_upload",
     "devpostSubmission": "pending_external_submission"
   },
@@ -45,7 +46,19 @@
     "shelfResponseId": "resp_00dd213e03c5662c016a5e86822778819f80c9c3de0e01c7ce",
     "supplierResponseId": "resp_02ddba0c272402e1016a5e86893d3481a08aebe7c76e6de728",
     "persistence": "postgresql_durable",
-    "supplierDateCorrection": "raw_2025_preserved_accepted_2026"
+    "supplierDateCorrection": "raw_2025_preserved_accepted_2026",
+    "productionShelfResponseId": "resp_0742af2ba8f74922016a5f35d0d6448192b017e50286ebfc11",
+    "productionSupplierResponseId": "resp_0f4f6b4cda005e88016a5f35db8104819292824c6e069a2a98",
+    "productionSupplierRawDate": "2007-03-20_unaccepted"
+  },
+  "publication": {
+    "repository": "https://github.com/Akwunwaj/kasistock-ai",
+    "repositoryVisibility": "private",
+    "licence": null,
+    "pullRequest": "https://github.com/Akwunwaj/kasistock-ai/pull/1",
+    "githubActionsRun": "https://github.com/Akwunwaj/kasistock-ai/actions/runs/29816237274",
+    "productionCommit": "33eb68da72deffb236a3cde29503015cca9ca337",
+    "productionUrl": "https://kasistock-ai.vercel.app"
   },
   "security": {
     "signedDraftTamperRejection": "passed",
@@ -53,7 +66,8 @@
     "secretsPrinted": false,
     "npmAuditHigh": 0,
     "npmAuditCritical": 0,
-    "npmAuditModerateTransitive": 2
+    "npmAuditModerateTransitive": 2,
+    "contentSecurityPolicy": "not_configured_hardening_gap"
   },
   "finalVideo": {
     "path": "submission/video/kasistock-ai-demo.mp4",

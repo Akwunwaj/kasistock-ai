@@ -1,8 +1,8 @@
 {
   "release": "0.5.0-codex-continuation",
-  "generatedAt": "2026-07-21T07:09:18.927Z",
+  "generatedAt": "2026-07-21T09:04:19.415Z",
   "production": {
-    "baseUrl": "http://127.0.0.1:3118",
+    "baseUrl": "https://kasistock-ai.vercel.app",
     "readinessStatus": 200,
     "readiness": {
       "service": "kasistock-ai",
@@ -25,8 +25,10 @@
       "referrer-policy": "strict-origin-when-cross-origin",
       "strict-transport-security": "max-age=31536000; includeSubDomains",
       "x-content-type-options": "nosniff",
-      "x-frame-options": "DENY"
-    }
+      "x-frame-options": "DENY",
+      "content-security-policy": null
+    },
+    "deploymentCommit": "33eb68da72deffb236a3cde29503015cca9ca337"
   },
   "authorityWorkflow": {
     "availableBudgetCents": 150000,
@@ -41,6 +43,7 @@
   "browser": {
     "postgresqlMode": { "passed": 8, "failed": 0 },
     "preparedFallbackMode": { "passed": 8, "failed": 0 },
+    "liveProduction": { "passed": 8, "failed": 0 },
     "accessibilitySurfacesPerMode": 5,
     "wcagAaaViolations": 0,
     "mobileViewportWidth": 375,

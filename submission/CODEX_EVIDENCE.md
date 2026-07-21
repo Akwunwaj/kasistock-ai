@@ -32,6 +32,8 @@ This primary Codex task genuinely performed:
 - Desktop/mobile in-app browser QA, muted-text contrast remediation, and mobile navigation repair.
 - Captioned 2:33.7 final demonstration production with disclosed OpenAI text-to-speech narration.
 - Verification, architecture, security, handover, and submission-copy updates.
+- Private GitHub publication, portable clean-install repair, green GitHub Actions, Neon migration,
+  Vercel deployment, and live production browser/model validation.
 
 ## Evidence files
 
@@ -44,6 +46,8 @@ This primary Codex task genuinely performed:
 - `submission/video/final-video-metadata.json` - final video duration, format and disclosure evidence.
 - `submission/video/kasistock-ai-demo.mp4` - final captioned narrated demonstration.
 - Git history: baseline import commit `aa0d075`, followed by continuation commits.
+- Production merge commit `33eb68d` and private pull request
+  `https://github.com/Akwunwaj/kasistock-ai/pull/1`.
 
 ## Claim discipline
 

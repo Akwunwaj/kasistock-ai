@@ -68,6 +68,10 @@ Live validation reinforced that boundary: GPT-5.6 extracted every supplier price
 correctly but read a visible 2026 date as 2025. KasiStock preserved the raw response and accepted a
 separate corrected snapshot rather than allowing valid JSON to become unquestioned truth.
 
+Production extraction-only validation reinforced it again: the deployed model returned the three
+correct supplier offers but misread the same visible date as 2007-03-20. That raw result was left
+unaccepted, demonstrating that structured output is evidence, not authority.
+
 ## Accomplishments
 
 - Complete evidence-to-approved-order workflow.
@@ -77,7 +81,8 @@ separate corrected snapshot rather than allowing valid JSON to become unquestion
 - Eight passing production Playwright tests in both PostgreSQL and prepared-fallback modes, including
   five axe surfaces with zero WCAG A/AA violations.
 - Live `gpt-5.6-sol` shelf and supplier PDF extraction with safe response-ID evidence.
-- Production build, secure headers, readiness checks, Vercel configuration, and GitHub Actions CI.
+- Live Vercel deployment backed by Neon PostgreSQL, secure headers, readiness checks, green GitHub
+  Actions CI, and 8/8 production Playwright tests.
 - Signed, supplier-specific PDF purchase orders and WhatsApp-ready messages.
 
 ## What was learned
@@ -97,7 +102,7 @@ pdf-lib, Vitest, Playwright, axe-core, GitHub Actions, and Vercel deployment con
 
 ## Links to complete before submission
 
-- Public demo: `<DEPLOYMENT_URL>`
-- Code repository: `<REPOSITORY_URL>`
+- Public demo: `https://kasistock-ai.vercel.app`
+- Code repository: `https://github.com/Akwunwaj/kasistock-ai` (private, no licence)
 - Demo video: `<YOUTUBE_URL>`
 - Primary Codex `/feedback` session ID: `<CODEX_FEEDBACK_SESSION_ID>`

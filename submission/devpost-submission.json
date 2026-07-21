@@ -3,8 +3,8 @@
   "tagline": "Turn limited cash into the right stock.",
   "track": "Work and Productivity",
   "links": {
-    "demo": "<DEPLOYMENT_URL>",
-    "repository": "<REPOSITORY_URL>",
+    "demo": "https://kasistock-ai.vercel.app",
+    "repository": "https://github.com/Akwunwaj/kasistock-ai",
     "video": "<YOUTUBE_URL>"
   },
   "codexFeedbackSessionId": "<CODEX_FEEDBACK_SESSION_ID>",
@@ -21,6 +21,7 @@
     "productIdentityAccuracyPercent": 91.67,
     "unsafeAutomaticMerges": 0,
     "playwrightWcagViolations": 0,
-    "liveOpenAiModel": "gpt-5.6-sol"
+    "liveOpenAiModel": "gpt-5.6-sol",
+    "liveProductionPlaywrightTests": 8
   }
 }
