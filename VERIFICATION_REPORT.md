@@ -4,7 +4,7 @@ Verification date: **21 July 2026 SAST**
 
 ## Baseline integrity
 
-- Source archive: `kasistock-ai-build-week-submission-v0.5.0.zip`
+- Source archive: supplied v0.5.0 baseline archive
 - Expected and observed SHA-256:
   `44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29`
 - Archive path review: 220 entries, one repository root, no unsafe extraction paths.
@@ -155,16 +155,22 @@ Container/codecs:                    MP4, H.264 video, AAC audio
 Resolution/frame rate:               1920 x 1080, 30 fps
 Narration duration:                  153.456 seconds
 Final video duration:                153.700 seconds
-Final video size:                    5,948,078 bytes
-Final video SHA-256:                 e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98
+Final video size:                    6,040,484 bytes
+Final video SHA-256:                 55301ba5ab0c4f1d1cdf43b23c0b08e3acac6015bc1233d654ca8c4a3301d253
 Visual samples inspected:            3, passed
 Three-minute requirement:            passed
 ```
 
+## Primary Codex feedback evidence
+
+The `/feedback` dialog was submitted from the primary continuation task with logs included.
+
+```text
+Session ID:                           019f8102-3d1f-7142-a96d-c14344f0f73c
+```
+
 ## Not yet complete
 
-- Primary Codex `/feedback` submission ID; `/feedback` is an interactive app dialog and no callable
-  feedback tool is exposed in this task.
 - Judge access to the private repository must be granted if the competition requires source review.
 - Final narrated video is locally complete; YouTube upload and Devpost submission remain external.
 
@@ -172,5 +178,5 @@ Three-minute requirement:            passed
 
 ```text
 ENGINEERING, CI, DEPLOYMENT AND LIVE VALIDATION: PASSED
-YOUTUBE, CODEX FEEDBACK ID AND DEVPOST SUBMISSION: PENDING
+YOUTUBE AND DEVPOST SUBMISSION: PENDING
 ```

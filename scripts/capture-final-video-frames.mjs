@@ -39,7 +39,7 @@ async function titleCard(filename, eyebrow, title, copy) {
 try {
   await titleCard(
     "01-title.png",
-    "OPENAI BUILD WEEK",
+    "KASISTOCK AI",
     "Turn limited cash into the right stock.",
     "Explainable multimodal evidence, deterministic purchasing, and explicit human approval for small retailers.",
   );

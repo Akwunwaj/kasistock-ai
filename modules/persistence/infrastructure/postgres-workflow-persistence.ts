@@ -19,7 +19,7 @@ import type {
 import { WorkflowPersistenceError } from "../application/workflow-persistence";
 
 const PROTOTYPE_MERCHANT_ID = "00000000-0000-4000-8000-000000000001";
-const CATALOGUE_VERSION = "build-week-v1";
+const CATALOGUE_VERSION = "kasistock-ai-v1";
 
 export class PostgresWorkflowPersistence implements WorkflowPersistence {
   readonly mode = "postgresql" as const;

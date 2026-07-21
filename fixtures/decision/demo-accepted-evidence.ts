@@ -13,7 +13,7 @@ import {
 } from "@/fixtures/extraction/demo-extractions";
 
 const acceptedAt = "2026-07-18T10:00:00.000Z";
-const acceptedBy = "Build Week demo merchant";
+const acceptedBy = "KasiStock AI demo merchant";
 
 export function createDemoAcceptedEvidenceBundle(): AcceptedEvidenceSnapshot[] {
   return [

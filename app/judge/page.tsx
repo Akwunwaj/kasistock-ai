@@ -33,7 +33,7 @@ export default function JudgePage() {
           <span className="brandMark">K</span>
           <span>
             <strong>KasiStock AI</strong>
-            <small>Build Week judge guide</small>
+            <small>KasiStock AI judge guide</small>
           </span>
         </Link>
         <div className="topbarActions">

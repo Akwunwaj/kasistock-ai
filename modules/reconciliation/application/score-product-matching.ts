@@ -43,7 +43,7 @@ export function scoreProductMatchingCases(
       sourcePath: `/cases/${index}`,
       rawProductName: evalCase.rawProductName,
       barcode: evalCase.barcode,
-      sourceLabel: "Build Week evaluation dataset",
+      sourceLabel: "KasiStock AI evaluation dataset",
     };
     const proposal = proposeProductMatches([source], products)[0];
     if (!proposal) throw new Error(`No proposal was returned for ${evalCase.caseId}.`);

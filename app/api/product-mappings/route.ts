@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       decisions: body.decisions,
       products: canonicalProducts,
       acceptedBy:
-        typeof body.acceptedBy === "string" ? body.acceptedBy : "Build Week demo merchant",
+        typeof body.acceptedBy === "string" ? body.acceptedBy : "KasiStock AI demo merchant",
     });
     const persistence = await getWorkflowPersistence().recordProductMappingSet(
       mappingSet,

@@ -39,7 +39,7 @@ npm run build
 
 Add or update tests whenever a domain invariant changes.
 
-## Scope guardrails for Build Week
+## Scope guardrails for KasiStock AI
 
 Do not add billing, full multi-tenancy, delivery logistics, complex RBAC, or production-scale
 WhatsApp onboarding before the primary demonstration path is complete and verified.

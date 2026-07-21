@@ -93,7 +93,7 @@ export function EvidenceWorkbench() {
           token: signed.token,
           acceptedPayload,
           reviewDecisions,
-          acceptedBy: "Build Week demo merchant",
+          acceptedBy: "KasiStock AI demo merchant",
         }),
       });
       const body = (await response.json()) as {

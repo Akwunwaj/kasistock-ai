@@ -1,6 +1,7 @@
 {
   "release": "0.5.0-codex-continuation",
   "generatedAt": "2026-07-21T09:04:19.415Z",
+  "codexFeedbackSessionId": "019f8102-3d1f-7142-a96d-c14344f0f73c",
   "production": {
     "baseUrl": "https://kasistock-ai.vercel.app",
     "readinessStatus": 200,
@@ -76,8 +77,8 @@
     "finalVideo": {
       "path": "submission/video/kasistock-ai-demo.mp4",
       "durationSeconds": 153.7,
-      "bytes": 5948078,
-      "sha256": "e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98"
+      "bytes": 6040484,
+      "sha256": "55301ba5ab0c4f1d1cdf43b23c0b08e3acac6015bc1233d654ca8c4a3301d253"
     },
     "narration": {
       "model": "gpt-4o-mini-tts",

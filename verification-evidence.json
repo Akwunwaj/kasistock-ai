@@ -1,8 +1,9 @@
 {
   "release": "0.5.0-codex-continuation",
   "generatedAt": "2026-07-21T09:04:19.415Z",
+  "codexFeedbackSessionId": "019f8102-3d1f-7142-a96d-c14344f0f73c",
   "baseline": {
-    "archive": "kasistock-ai-build-week-submission-v0.5.0.zip",
+    "archive": "supplied-v0.5.0-baseline-archive",
     "sha256": "44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29",
     "importCommit": "aa0d075"
   },
@@ -78,7 +79,7 @@
     "audioCodec": "aac",
     "captionCount": 21,
     "aiVoiceDisclosure": true,
-    "bytes": 5948078,
-    "sha256": "e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98"
+    "bytes": 6040484,
+    "sha256": "55301ba5ab0c4f1d1cdf43b23c0b08e3acac6015bc1233d654ca8c4a3301d253"
   }
 }

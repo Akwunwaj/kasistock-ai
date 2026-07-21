@@ -222,7 +222,7 @@ export function DecisionWorkbench() {
         body: JSON.stringify({
           snapshots,
           decisions,
-          acceptedBy: "Build Week demo merchant",
+          acceptedBy: "KasiStock AI demo merchant",
         }),
       });
       const body = (await response.json()) as {

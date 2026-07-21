@@ -38,7 +38,7 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 42, fontWeight: 800 }}>KasiStock AI</div>
-          <div style={{ fontSize: 23, color: "#52675f" }}>OpenAI Build Week 2026</div>
+          <div style={{ fontSize: 23, color: "#52675f" }}>KasiStock AI 2026</div>
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
