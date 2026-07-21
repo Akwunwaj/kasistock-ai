@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { canonicalProducts } from "@/fixtures/catalogue/canonical-products";
 import {
   buildAcceptedProductMappingSet,
@@ -9,7 +10,10 @@ import {
   ReconciliationEvidenceError,
 } from "@/modules/reconciliation/application/source-product-records";
 import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
-import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
+import {
+  WorkflowPersistenceConflictError,
+  WorkflowPersistenceError,
+} from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -33,6 +37,9 @@ export async function POST(request: Request) {
     if (error instanceof WorkflowPersistenceError) {
       return errorResponse(503, "PERSISTENCE_UNAVAILABLE", error.message);
     }
+    if (error instanceof WorkflowPersistenceConflictError) {
+      return errorResponse(409, "IMMUTABLE_EVIDENCE_CONFLICT", error.message);
+    }
     if (
       error instanceof ReconciliationEvidenceError ||
       error instanceof ProductMappingAcceptanceError
@@ -46,8 +53,21 @@ export async function POST(request: Request) {
           : undefined,
       );
     }
+    if (error instanceof z.ZodError) {
+      const issue = error.issues[0];
+      const path = issue?.path.join(".") || "request";
+      return errorResponse(
+        400,
+        "INVALID_MAPPING_REQUEST",
+        `The ${path} field is invalid: ${issue?.message ?? "invalid value"}.`,
+      );
+    }
     console.error("Product mapping acceptance failed", safeErrorMetadata(error));
-    return errorResponse(400, "INVALID_MAPPING_REQUEST", "The product mapping request is invalid.");
+    return errorResponse(
+      500,
+      "MAPPING_ACCEPTANCE_FAILED",
+      "Product mappings could not be accepted due to an unexpected server error. Retry once, then contact support with the error time.",
+    );
   }
 }
 
