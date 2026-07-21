@@ -16,3 +16,26 @@ test("prepared extraction can be reviewed and accepted", async ({ page }) => {
     page.getByText("Human-accepted evidence is ready for product reconciliation."),
   ).toBeVisible();
 });
+
+test("live extraction reports a friendly timeout when the platform returns plain text", async ({
+  page,
+}) => {
+  await page.route("**/api/extractions", async (route) => {
+    await route.fulfill({
+      status: 504,
+      contentType: "text/plain",
+      body: "An error occurred with your deployment",
+    });
+  });
+  await page.goto("/evidence");
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "shelf.png",
+    mimeType: "image/png",
+    buffer: Buffer.from("test image"),
+  });
+  await page.getByRole("button", { name: "Run GPT-5.6 extraction" }).click();
+
+  await expect(page.locator(".errorNotice")).toHaveText(
+    "Live extraction took too long. Try again or use the prepared demo while the service recovers.",
+  );
+});

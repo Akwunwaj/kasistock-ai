@@ -9,7 +9,11 @@ export function getOpenAIClient(): OpenAI {
     throw new Error("OPENAI_API_KEY is not configured. Add it to .env.local on the server.");
   }
 
-  client ??= new OpenAI({ apiKey });
+  client ??= new OpenAI({
+    apiKey,
+    timeout: 240_000,
+    maxRetries: 1,
+  });
   return client;
 }
 

@@ -47,7 +47,7 @@ export function EvidenceWorkbench() {
     try {
       const response =
         mode === "demo" ? await fetch(`/api/extractions?kind=${kind}`) : await postLiveExtraction();
-      const body = (await response.json()) as SignedExtraction & ApiErrorBody;
+      const body = await readJsonResponse<SignedExtraction & ApiErrorBody>(response);
       if (!response.ok) {
         throw new Error(body.error?.message ?? "Extraction failed.");
       }
@@ -337,6 +337,30 @@ export function EvidenceWorkbench() {
       </div>
     </section>
   );
+}
+
+async function readJsonResponse<T>(response: Response): Promise<T> {
+  const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
+  if (!contentType.includes("application/json")) {
+    if (response.status === 504) {
+      throw new Error(
+        "Live extraction took too long. Try again or use the prepared demo while the service recovers.",
+      );
+    }
+    throw new Error(
+      response.ok
+        ? "The server returned an unreadable extraction response."
+        : `The extraction service returned HTTP ${response.status}. Try again or use the prepared demo.`,
+    );
+  }
+
+  try {
+    return (await response.json()) as T;
+  } catch {
+    throw new Error(
+      "The server returned invalid extraction data. Try again or use the prepared demo.",
+    );
+  }
 }
 
 function ExtractionMetadata({ signed }: { signed: SignedExtraction }) {

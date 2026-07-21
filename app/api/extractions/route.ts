@@ -27,7 +27,7 @@ import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persis
 import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
