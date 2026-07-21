@@ -4,7 +4,7 @@
   "private": true,
   "description": "Explainable multimodal evidence and budget-constrained restocking intelligence for small retailers.",
   "engines": {
-    "node": ">=24.0.0",
+    "node": "24.x",
     "npm": ">=11.0.0"
   },
   "scripts": {
