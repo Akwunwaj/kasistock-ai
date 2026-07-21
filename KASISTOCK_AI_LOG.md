@@ -1,4 +1,4 @@
-# Build Week Implementation Log
+# KasiStock AI Implementation Log
 
 Use this log together with Git history and Codex session evidence.
 
@@ -81,7 +81,7 @@ Use this log together with Git history and Codex session evidence.
 
 ## 2026-07-18 — v0.5.0 deployment and submission release
 
-- Reconciled official Build Week deadline, judging criteria, and required submission materials.
+- Reconciled the official project deadline, judging criteria, and required submission materials.
 - Added Vercel, GitHub Actions, Node 24, readiness, and production environment validation.
 - Added live OpenAI access validation without secret disclosure.
 - Added security headers, metadata, manifest, sitemap, robots, and Open Graph image generation.
@@ -160,3 +160,14 @@ Use this log together with Git history and Codex session evidence.
 - Passed 8/8 Playwright tests against the live deployment, including five WCAG A/AA surfaces.
 - Revalidated the exact `gpt-5.6-sol` identifier through production extraction calls. The raw
   supplier result misread the fixture date as `2007-03-20`; it was deliberately left unaccepted.
+
+## 21 July 2026 — KasiStock AI rebrand
+
+- Removed the former event branding from tracked source, documentation, tests, evidence, UI labels,
+  operational identifiers, and submission copy.
+- Renamed the implementation log and regenerated its source-integrity manifest entry.
+- Re-captured all ten 1920 x 1080 demonstration frames and rebuilt the narrated MP4 with the
+  KasiStock AI title card while preserving the narration, captions, authority story, and duration.
+- Preserved the existing Git history and commit messages; the rebrand is an additive change.
+- Re-ran the complete local quality, database, browser, accessibility, and security-relevant test
+  gates. Per owner direction, no Vercel configuration or deployment was changed.

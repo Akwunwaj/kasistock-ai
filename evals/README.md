@@ -1,6 +1,6 @@
 # KasiStock AI evaluations
 
-The Build Week release includes a labelled product-identity dataset at
+The KasiStock AI release includes a labelled product-identity dataset at
 `evals/product-matching-cases.json`.
 
 Run the evaluation gate with:

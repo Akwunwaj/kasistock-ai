@@ -7,7 +7,7 @@ decision.
 
 **Turn limited cash into the right stock.**
 
-KasiStock AI is an OpenAI Build Week application for cash-constrained small retailers. It turns
+KasiStock AI is an OpenAI-powered application for cash-constrained small retailers. It turns
 shelf evidence, supplier catalogues, accepted sales history, and a cash budget into an explainable,
 budget-constrained restocking plan, then requires explicit merchant approval before generating
 supplier purchase orders.

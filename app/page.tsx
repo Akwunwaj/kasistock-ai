@@ -33,7 +33,7 @@ export default function HomePage() {
 
       <section className="hero">
         <div>
-          <p className="eyebrow">BUILD WEEK PROTOTYPE</p>
+          <p className="eyebrow">KasiStock AI PROTOTYPE</p>
           <h1>Turn limited cash into the right stock.</h1>
           <p className="heroCopy">
             KasiStock AI converts shelf evidence, supplier prices, and recent sales into an

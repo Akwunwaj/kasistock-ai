@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "restocking",
     "South Africa",
     "GPT-5.6",
-    "OpenAI Build Week",
+    "KasiStock AI",
   ],
   authors: [{ name: "KasiStock AI" }],
   creator: "KasiStock AI",

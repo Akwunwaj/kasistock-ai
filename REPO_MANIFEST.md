@@ -2,7 +2,7 @@
 
 ## Release purpose
 
-Submission-ready Build Week source release plus a genuine Codex continuation adding durable
+Submission-ready KasiStock AI source release plus a genuine Codex continuation adding durable
 PostgreSQL authority records, live GPT-5.6 evidence, browser/accessibility QA, and final media.
 
 ## Root governance and release files
@@ -10,7 +10,7 @@ PostgreSQL authority records, live GPT-5.6 evidence, browser/accessibility QA, a
 ```text
 AGENTS.md
 ARCHITECTURE.md
-BUILD_WEEK_LOG.md
+KASISTOCK_AI_LOG.md
 CHANGES_V0.3.0.md
 CHANGES_V0.4.0.md
 CHANGES_V0.5.0.md
@@ -38,7 +38,7 @@ fixtures/            Prepared evidence, catalogue and generated PDF fixture
 lib/                  Shared server and money utilities
 modules/              Evidence, extraction, reconciliation, restocking and purchasing domains
 scripts/              Environment, OpenAI, accessibility and media automation
-submission/           Copy-ready Build Week submission and deployment assets
+submission/           Copy-ready KasiStock AI submission and deployment assets
 tests/                Unit, integration, evaluation and browser specifications
 .github/workflows/    Node 24 quality and Playwright CI workflow
 ```

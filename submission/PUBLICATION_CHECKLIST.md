@@ -18,7 +18,7 @@
 - [x] README contains setup, architecture, tests, Codex contribution, and known limitations.
 - [x] No `.env.local`, API key, signing secret, build output, or dependency directory committed.
 - [ ] Primary Codex `/feedback` session ID recorded.
-- [x] Build Week commits are clearly identifiable.
+- [x] KasiStock AI commits are clearly identifiable.
 - [x] GitHub Actions passes.
 - [x] Confirm repository visibility and licence with the owner before making it public or adding a licence.
 

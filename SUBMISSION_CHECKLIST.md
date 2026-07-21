@@ -1,4 +1,4 @@
-# Build Week Submission Checklist
+# KasiStock AI Submission Checklist
 
 ## Product
 
@@ -20,7 +20,7 @@
 
 ## Engineering evidence
 
-- [x] Standalone Build Week repository.
+- [x] Standalone KasiStock AI repository.
 - [x] `AGENTS.md` operating contract.
 - [x] Architecture and trust-boundary documentation.
 - [x] Node 24/npm 11 clean installation and production build.

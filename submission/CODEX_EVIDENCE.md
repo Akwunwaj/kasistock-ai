@@ -14,7 +14,7 @@ Do not substitute a Git commit, task title, invented UUID, or OpenAI response ID
 
 ## Supplied baseline versus genuine continuation
 
-The only baseline is the verified `kasistock-ai-build-week-submission-v0.5.0.zip` archive with SHA-256
+The only baseline is the verified supplied v0.5.0 archive with SHA-256
 `44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29`. It was imported without
 claiming that the current task created its pre-existing functionality.
 
@@ -37,7 +37,7 @@ This primary Codex task genuinely performed:
 
 ## Evidence files
 
-- `BUILD_WEEK_LOG.md` - dated provenance and work log.
+- `KASISTOCK_AI_LOG.md` - dated provenance and work log.
 - `VERIFICATION_REPORT.md` - commands, counts, findings and remaining blockers.
 - `submission/qa/live-openai-validation.json` - safe live response IDs, hashes and correction evidence.
 - `modules/persistence/` - continuation implementation.
