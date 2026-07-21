@@ -1,4 +1,4 @@
-# Build Week Implementation Log
+# KasiStock AI Implementation Log
 
 Use this log together with Git history and Codex session evidence.
 
