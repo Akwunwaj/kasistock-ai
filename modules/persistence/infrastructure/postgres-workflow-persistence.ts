@@ -312,24 +312,27 @@ export class PostgresWorkflowPersistence implements WorkflowPersistence {
   }
 
   private async transaction<T>(operation: (client: PoolClient) => Promise<T>): Promise<T> {
-    const client = await this.pool.connect();
+    let client: PoolClient | undefined;
     try {
+      client = await this.pool.connect();
       await client.query("BEGIN");
       const result = await operation(client);
       await client.query("COMMIT");
       return result;
     } catch (error) {
-      try {
-        await client.query("ROLLBACK");
-      } catch {
-        // Preserve the original persistence failure while still releasing the client.
+      if (client) {
+        try {
+          await client.query("ROLLBACK");
+        } catch {
+          // Preserve the original persistence failure while still releasing the client.
+        }
       }
       throw error instanceof WorkflowPersistenceError ||
         error instanceof WorkflowPersistenceConflictError
         ? error
         : new WorkflowPersistenceError({ cause: error });
     } finally {
-      client.release();
+      client?.release();
     }
   }
 
