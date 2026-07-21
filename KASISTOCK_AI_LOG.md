@@ -171,3 +171,24 @@ Not recorded in the supplied baseline.
 - Preserved the existing Git history and commit messages; the rebrand is an additive change.
 - Re-ran the complete local quality, database, browser, accessibility, and security-relevant test
   gates. Per owner direction, no Vercel configuration or deployment was changed.
+
+## 21 July 2026 — production evidence extraction recovery
+
+- Traced the reported browser JSON error to a concrete Vercel runtime timeout: `POST
+/api/extractions` was terminated after the route's explicit 60-second limit and returned plain
+  text beginning with `An error`.
+- Raised only the extraction route allowance to 300 seconds, bounded the OpenAI client below that
+  deadline, and reduced evidence-extraction reasoning effort from medium to low without changing
+  the configured `gpt-5.6-sol` model, high-detail vision, `store: false`, or the structured authority
+  contracts.
+- Added safe handling for non-JSON platform responses and diagnostic distinctions for incomplete or
+  refused structured responses.
+- Added one Vitest regression and one Playwright regression. The normal suite passed 38 tests with
+  one conditional database skip; the prepared fallback browser suite passed 9/9 with five WCAG A/AA
+  surfaces reporting zero violations.
+- Merged private pull request `#5` as production commit `05b7e40` and confirmed both GitHub CI jobs
+  and Vercel deployment succeeded.
+- Confirmed two live production image extractions returned HTTP 200 in 8.7 and 10.0 seconds using
+  `gpt-5.6-sol` with durable PostgreSQL receipts. No raw result was human-accepted.
+- Recorded the separate post-fix production browser result truthfully: 8/9 passed; the decision flow
+  received HTTP 503 from `/api/product-mappings` and remains a persistence blocker.

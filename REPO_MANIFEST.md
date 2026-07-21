@@ -70,9 +70,10 @@ tsconfig.tsbuildinfo
 
 ```text
 Exact clean toolchain:             Node 24.18.0 / npm 11.16.0
-Automated tests:                   37 passed / 0 failed, 1 conditional skip
+Automated tests:                   38 passed / 0 failed, 1 conditional skip
 Real PostgreSQL integration:       1 passed / 0 failed
 Production build:                  passed
-Production Playwright suites:      8/8 PostgreSQL, 8/8 fallback
+Playwright judging fallback:       9/9 passed
+Live post-fix Playwright:          8/9 (product-mapping persistence returned 503)
 Playwright accessibility:          5 surfaces, 0 WCAG A/AA violations
 ```
