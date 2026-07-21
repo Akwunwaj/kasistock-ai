@@ -2,7 +2,12 @@ import { Pool } from "pg";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { canonicalProducts } from "@/fixtures/catalogue/canonical-products";
 import { createDemoAcceptedEvidenceBundle } from "@/fixtures/decision/demo-accepted-evidence";
-import type { ExtractionEnvelope } from "@/modules/evidence/domain/contracts";
+import { computeAcceptedEvidenceHash } from "@/modules/evidence/application/accepted-evidence-hash";
+import {
+  acceptedEvidenceSnapshotSchema,
+  type AcceptedEvidenceSnapshot,
+  type ExtractionEnvelope,
+} from "@/modules/evidence/domain/contracts";
 import { optimiseRestockPlan } from "@/modules/optimisation/domain/optimise-restock-plan";
 import { PostgresWorkflowPersistence } from "@/modules/persistence/infrastructure/postgres-workflow-persistence";
 import { approvePurchaseOrder } from "@/modules/purchasing/application/approve-purchase-order";
@@ -49,6 +54,12 @@ describeWithDatabase("PostgreSQL workflow persistence", () => {
     for (const snapshot of snapshots) {
       await persistence.recordAcceptedEvidence(envelopeFor(snapshot), snapshot);
     }
+    const retriedAcceptance = retrySnapshot(snapshots[0]!);
+    const retryResult = await persistence.recordAcceptedEvidence(
+      envelopeFor(retriedAcceptance),
+      retriedAcceptance,
+    );
+    expect(retryResult.snapshot).toEqual(snapshots[0]);
 
     const proposals = proposeProductMatches(
       extractSourceProductRecords(snapshots),
@@ -142,6 +153,25 @@ describeWithDatabase("PostgreSQL workflow persistence", () => {
     });
   });
 });
+
+function retrySnapshot(snapshot: AcceptedEvidenceSnapshot): AcceptedEvidenceSnapshot {
+  const acceptedAt = "2026-07-18T10:30:00.000Z";
+  const hashSource = {
+    kind: snapshot.kind,
+    sourceExtractionId: snapshot.sourceExtractionId,
+    sourceSha256: snapshot.sourceSha256,
+    acceptedPayload: snapshot.acceptedPayload,
+    reviewDecisions: snapshot.reviewDecisions,
+    acceptedBy: snapshot.acceptedBy,
+    acceptedAt,
+  };
+  return acceptedEvidenceSnapshotSchema.parse({
+    ...snapshot,
+    snapshotId: "99999999-9999-4999-8999-999999999999",
+    acceptedAt,
+    evidenceHash: computeAcceptedEvidenceHash(hashSource),
+  });
+}
 
 function envelopeFor(
   snapshot: ReturnType<typeof createDemoAcceptedEvidenceBundle>[number],

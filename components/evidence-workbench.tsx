@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type {
   EvidenceKind,
   SalesHistory,
@@ -27,6 +27,7 @@ export function EvidenceWorkbench() {
   const [snapshot, setSnapshot] = useState<AcceptedEvidenceSnapshot | null>(null);
   const [status, setStatus] = useState<"idle" | "extracting" | "accepting">("idle");
   const [error, setError] = useState<string | null>(null);
+  const acceptanceInFlight = useRef(false);
 
   const requiredPaths = useMemo(
     () => [...new Set(signed?.envelope.reviewIssues.map((issue) => issue.path) ?? [])],
@@ -72,7 +73,8 @@ export function EvidenceWorkbench() {
   }
 
   async function acceptEvidence() {
-    if (!signed || !acceptedPayload) return;
+    if (!signed || !acceptedPayload || snapshot || acceptanceInFlight.current) return;
+    acceptanceInFlight.current = true;
     setError(null);
     setStatus("accepting");
     try {
@@ -108,6 +110,7 @@ export function EvidenceWorkbench() {
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Evidence acceptance failed.");
     } finally {
+      acceptanceInFlight.current = false;
       setStatus("idle");
     }
   }
@@ -282,7 +285,7 @@ export function EvidenceWorkbench() {
               <button
                 type="button"
                 className="button primary"
-                disabled={status !== "idle" || unresolvedCount > 0}
+                disabled={status !== "idle" || unresolvedCount > 0 || snapshot !== null}
                 onClick={() => void acceptEvidence()}
               >
                 {status === "accepting" ? "Creating snapshot…" : "Accept evidence snapshot"}

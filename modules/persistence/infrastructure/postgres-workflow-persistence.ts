@@ -6,6 +6,7 @@ import type {
   ExtractionEnvelope,
   AcceptedEvidenceSnapshot,
 } from "@/modules/evidence/domain/contracts";
+import { acceptedEvidenceSnapshotSchema } from "@/modules/evidence/domain/contracts";
 import type {
   ApprovedOrderBundle,
   PurchaseOrderDraft,
@@ -13,13 +14,30 @@ import type {
 import type { AcceptedProductMappingSet } from "@/modules/reconciliation/domain/contracts";
 import type {
   PersistenceReceipt,
+  AcceptedEvidencePersistenceResult,
   RestockScenarioRecord,
   WorkflowPersistence,
 } from "../application/workflow-persistence";
-import { WorkflowPersistenceError } from "../application/workflow-persistence";
+import {
+  WorkflowPersistenceConflictError,
+  WorkflowPersistenceError,
+} from "../application/workflow-persistence";
 
 const PROTOTYPE_MERCHANT_ID = "00000000-0000-4000-8000-000000000001";
 const CATALOGUE_VERSION = "kasistock-ai-v1";
+
+interface StoredAcceptedEvidenceRow {
+  id: string;
+  source_extraction_job_id: string;
+  kind: string;
+  version: number;
+  source_sha256: string;
+  accepted_payload: unknown;
+  review_decisions: unknown;
+  evidence_hash: string;
+  accepted_by: string;
+  accepted_at: Date | string;
+}
 
 export class PostgresWorkflowPersistence implements WorkflowPersistence {
   readonly mode = "postgresql" as const;
@@ -42,13 +60,13 @@ export class PostgresWorkflowPersistence implements WorkflowPersistence {
   async recordAcceptedEvidence(
     envelope: ExtractionEnvelope,
     snapshot: AcceptedEvidenceSnapshot,
-  ): Promise<PersistenceReceipt> {
-    await this.transaction(async (client) => {
+  ): Promise<AcceptedEvidencePersistenceResult> {
+    const persistedSnapshot = await this.transaction(async (client) => {
       await this.ensureMerchant(client, snapshot.acceptedBy);
       await this.insertExtraction(client, envelope);
-      await this.insertAcceptedSnapshot(client, snapshot);
+      return this.insertAcceptedSnapshot(client, snapshot);
     });
-    return this.receipt();
+    return { snapshot: persistedSnapshot, persistence: this.receipt() };
   }
 
   async recordProductMappingSet(
@@ -306,7 +324,8 @@ export class PostgresWorkflowPersistence implements WorkflowPersistence {
       } catch {
         // Preserve the original persistence failure while still releasing the client.
       }
-      throw error instanceof WorkflowPersistenceError
+      throw error instanceof WorkflowPersistenceError ||
+        error instanceof WorkflowPersistenceConflictError
         ? error
         : new WorkflowPersistenceError({ cause: error });
     } finally {
@@ -404,13 +423,15 @@ export class PostgresWorkflowPersistence implements WorkflowPersistence {
   private async insertAcceptedSnapshot(
     client: PoolClient,
     snapshot: AcceptedEvidenceSnapshot,
-  ): Promise<void> {
-    await client.query(
+  ): Promise<AcceptedEvidenceSnapshot> {
+    const inserted = await client.query<StoredAcceptedEvidenceRow>(
       `insert into accepted_evidence_snapshots (
         id, merchant_id, source_extraction_job_id, kind, version, source_sha256,
         accepted_payload, review_decisions, evidence_hash, accepted_by, accepted_at
       ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-      on conflict (evidence_hash) do nothing`,
+      on conflict (source_extraction_job_id, version) do nothing
+      returning id, source_extraction_job_id, kind, version, source_sha256,
+        accepted_payload, review_decisions, evidence_hash, accepted_by, accepted_at`,
       [
         snapshot.snapshotId,
         PROTOTYPE_MERCHANT_ID,
@@ -425,6 +446,42 @@ export class PostgresWorkflowPersistence implements WorkflowPersistence {
         snapshot.acceptedAt,
       ],
     );
+
+    const row =
+      inserted.rows[0] ??
+      (
+        await client.query<StoredAcceptedEvidenceRow>(
+          `select id, source_extraction_job_id, kind, version, source_sha256,
+            accepted_payload, review_decisions, evidence_hash, accepted_by, accepted_at
+           from accepted_evidence_snapshots
+           where source_extraction_job_id = $1 and version = $2`,
+          [snapshot.sourceExtractionId, snapshot.version],
+        )
+      ).rows[0];
+    if (!row) throw new Error("Failed to resolve the persisted accepted evidence snapshot.");
+
+    const persisted = acceptedEvidenceSnapshotSchema.parse({
+      snapshotId: row.id,
+      sourceExtractionId: row.source_extraction_job_id,
+      kind: row.kind,
+      version: row.version,
+      sourceSha256: row.source_sha256,
+      acceptedPayload: row.accepted_payload,
+      reviewDecisions: row.review_decisions,
+      evidenceHash: row.evidence_hash,
+      acceptedBy: row.accepted_by,
+      acceptedAt:
+        row.accepted_at instanceof Date
+          ? row.accepted_at.toISOString()
+          : new Date(row.accepted_at).toISOString(),
+    });
+
+    if (!sameAcceptanceDecision(persisted, snapshot)) {
+      throw new WorkflowPersistenceConflictError(
+        "This extraction already has an immutable accepted snapshot. Start a new extraction to make different corrections.",
+      );
+    }
+    return persisted;
   }
 
   private async insertMappingSet(
@@ -547,6 +604,22 @@ function sha256(value: unknown): string {
 function requiredId(value: string | undefined, recordName: string): string {
   if (!value) throw new Error(`Failed to resolve the persisted ${recordName}.`);
   return value;
+}
+
+function sameAcceptanceDecision(
+  persisted: AcceptedEvidenceSnapshot,
+  requested: AcceptedEvidenceSnapshot,
+): boolean {
+  const authorityFields = (snapshot: AcceptedEvidenceSnapshot) => ({
+    kind: snapshot.kind,
+    version: snapshot.version,
+    sourceExtractionId: snapshot.sourceExtractionId,
+    sourceSha256: snapshot.sourceSha256,
+    acceptedPayload: snapshot.acceptedPayload,
+    reviewDecisions: snapshot.reviewDecisions,
+    acceptedBy: snapshot.acceptedBy,
+  });
+  return canonicalJson(authorityFields(persisted)) === canonicalJson(authorityFields(requested));
 }
 
 function normaliseAlias(value: string): string {
