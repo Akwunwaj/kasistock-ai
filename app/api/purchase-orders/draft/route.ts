@@ -12,6 +12,8 @@ import {
   merchantOrderProfileSchema,
   orderFulfilmentSchema,
 } from "@/modules/purchasing/domain/contracts";
+import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
+import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -28,8 +30,18 @@ export async function POST(request: Request) {
   try {
     const input = requestSchema.parse(await request.json());
     const draft = buildPurchaseOrderDraft(input);
-    return NextResponse.json({ envelope: signPurchaseOrderDraft(draft) }, { status: 201 });
+    const persistence = await getWorkflowPersistence().recordPurchaseOrderDraft(draft);
+    return NextResponse.json(
+      { envelope: signPurchaseOrderDraft(draft), persistence },
+      { status: 201 },
+    );
   } catch (error) {
+    if (error instanceof WorkflowPersistenceError) {
+      return NextResponse.json(
+        { error: { code: "PERSISTENCE_UNAVAILABLE", message: error.message } },
+        { status: 503 },
+      );
+    }
     if (error instanceof PurchaseOrderDraftError) {
       return NextResponse.json(
         { error: { code: error.code, message: error.message } },

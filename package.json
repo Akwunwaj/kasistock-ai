@@ -22,8 +22,13 @@
     "evals": "vitest run tests/evals/product-matching-eval.test.ts",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
     "capture:submission": "node scripts/capture-submission-assets.mjs",
+    "capture:video-frames": "node scripts/capture-final-video-frames.mjs",
+    "generate:video-narration": "node scripts/generate-video-narration.mjs",
+    "assemble:video": "node scripts/assemble-final-video.mjs",
+    "db:migrate": "node scripts/migrate-database.mjs",
     "validate:env": "node scripts/validate-production-env.mjs",
     "validate:openai": "node scripts/validate-live-openai.mjs",
+    "validate:live-workflow": "node scripts/validate-live-workflow.mjs",
     "verify:submission": "npm run verify && npm run test:e2e && npm run capture:submission",
     "audit:a11y": "node scripts/audit-static-pages.mjs",
     "verify:offline-submission": "npm run verify && npm run audit:a11y && npm run capture:submission"
@@ -32,21 +37,23 @@
     "next": "16.2.10",
     "openai": "6.48.0",
     "pdf-lib": "1.17.1",
+    "pg": "8.22.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
     "@playwright/test": "1.61.1",
     "@types/node": "24.10.0",
+    "@types/pg": "8.20.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.1",
     "eslint-config-next": "16.2.10",
     "prettier": "3.9.5",
     "typescript": "6.0.3",
-    "vitest": "4.1.10",
-    "@axe-core/playwright": "4.12.1"
+    "vitest": "4.1.10"
   },
   "packageManager": "npm@11.12.1"
 }

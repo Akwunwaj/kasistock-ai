@@ -2,6 +2,10 @@
 
 Use this log together with Git history and Codex session evidence.
 
+> Provenance note: all entries dated 18 July were present in the verified supplied ZIP. This
+> continuation did not witness those sessions and does not treat their Codex attribution as proven.
+> The 20 July entry below is the exact work performed in the current primary Codex task.
+
 ## 18 July 2026 — Architecture and repository scaffold
 
 ### Scope
@@ -11,7 +15,7 @@ Use this log together with Git history and Codex session evidence.
 - Added versioned extraction contracts, money invariants, optimiser baseline, database schema,
   seeded demonstration UI, audit concepts, tests, and submission governance documents.
 
-### Codex contribution
+### Supplied archive attribution (not independently verified here)
 
 - Repository architecture and file layout.
 - Responsive demonstration workspace.
@@ -99,3 +103,42 @@ Use this log together with Git history and Codex session evidence.
 - Audited five server-rendered judging surfaces with zero WCAG A/AA violations.
 - Left live OpenAI validation, GitHub publication, Vercel deployment, final narrated YouTube upload,
   Codex `/feedback` session recording and Devpost submission as explicit credential-bound actions.
+
+## 20 July 2026 — genuine Codex continuation
+
+### Baseline
+
+- Verified the handover ZIP SHA-256 exactly before extraction.
+- Imported the ZIP as the sole repository baseline in commit `aa0d075`.
+- Read the repository authority, architecture, security, verification and submission instructions
+  before editing.
+
+### Engineering performed in this task
+
+- Implemented optional durable PostgreSQL workflow persistence and an idempotent schema migration.
+- Persisted raw extractions separately from accepted corrections, mapping sets, scenarios,
+  calculations, recommendations, signed drafts, approvals, supplier orders/messages and audit events.
+- Made approval persistence atomic and made configured-but-unreachable databases fail closed.
+- Retained an explicit non-durable prepared fallback for no-API judging.
+- Added real PostgreSQL integration coverage and fallback unit coverage.
+- Fixed JSONB array serialisation and same-day purchase-order number collisions discovered by the
+  real database gate.
+- Fixed the OpenAI PDF input data-URI contract discovered by a live request and added a regression
+  test.
+- Added repeatable live `gpt-5.6-sol` shelf/PDF validation with safe evidence output.
+- Fixed muted-text contrast and mobile navigation issues found through axe and in-app browser QA.
+- Set the Next.js Turbopack root explicitly to prevent parent-lockfile workspace leakage.
+
+### Verification
+
+- `npm run verify`: 37 tests passed, one database-conditional test skipped, build passed.
+- PostgreSQL integration: 1 test passed against PostgreSQL 17.
+- Production Playwright: 8/8 passed with PostgreSQL and 8/8 passed in prepared fallback mode.
+- Live OpenAI: minimal smoke, synthetic shelf, and supplier PDF requests passed with
+  `gpt-5.6-sol`.
+- The supplier date mismatch (raw 2025, visible 2026) was corrected only in a separate accepted
+  evidence snapshot; the raw model record remained immutable.
+
+### Primary Codex `/feedback` session ID
+
+`PENDING_INTERACTIVE_FEEDBACK_DIALOG`

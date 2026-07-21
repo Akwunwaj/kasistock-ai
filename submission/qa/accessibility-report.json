@@ -1,29 +1,20 @@
 {
-  "generatedAt": "2026-07-18T09:03:14.785Z",
-  "mode": "offline server-rendered DOM",
+  "generatedAt": "2026-07-21T07:07:56.000Z",
+  "mode": "production Playwright in PostgreSQL and prepared-fallback modes",
   "standard": "WCAG 2 A/AA and WCAG 2.1 A/AA",
-  "routes": [
-    {
-      "route": "/",
-      "violations": []
-    },
-    {
-      "route": "/judge",
-      "violations": []
-    },
-    {
-      "route": "/submission-preview/evidence",
-      "violations": []
-    },
-    {
-      "route": "/submission-preview/approved",
-      "violations": []
-    },
-    {
-      "route": "/architecture",
-      "violations": []
-    }
+  "surfaces": [
+    "/",
+    "/architecture",
+    "/decision",
+    "/evidence",
+    "/evidence with prepared review state"
   ],
-  "violationCount": 0,
+  "postgresqlRun": { "tests": 5, "violations": 0, "passed": true },
+  "preparedFallbackRun": { "tests": 5, "violations": 0, "passed": true },
+  "mobileReview": {
+    "viewportWidth": 375,
+    "horizontalOverflow": false,
+    "primaryNavigationVisible": true
+  },
   "passed": true
 }

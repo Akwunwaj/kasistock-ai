@@ -1,26 +1,9 @@
 {
-  "release": "0.5.0",
-  "generatedAt": "2026-07-18T09:08:37.193715+00:00",
-  "toolchain": {
-    "node": "24.15.0",
-    "npm": "11.12.1"
-  },
+  "release": "0.5.0-codex-continuation",
+  "generatedAt": "2026-07-21T07:09:18.927Z",
   "production": {
-    "routeStatuses": {
-      "/": 200,
-      "/judge": 200,
-      "/evidence": 200,
-      "/decision": 200,
-      "/architecture": 200,
-      "/submission-preview/evidence": 200,
-      "/submission-preview/approved": 200,
-      "/api/health": 200,
-      "/api/readiness": 200,
-      "/opengraph-image": 200,
-      "/manifest.webmanifest": 200,
-      "/robots.txt": 200,
-      "/sitemap.xml": 200
-    },
+    "baseUrl": "http://127.0.0.1:3118",
+    "readinessStatus": 200,
     "readiness": {
       "service": "kasistock-ai",
       "status": "ready",
@@ -30,7 +13,11 @@
         "evidenceSigningSecret": true,
         "applicationBaseUrl": true
       },
-      "timestamp": "2026-07-18T09:08:37.179Z"
+      "persistence": {
+        "mode": "postgresql",
+        "configured": true,
+        "reachable": true
+      }
     },
     "securityHeaders": {
       "cross-origin-opener-policy": "same-origin",
@@ -41,178 +28,60 @@
       "x-frame-options": "DENY"
     }
   },
-  "accessibility": {
-    "mode": "offline server-rendered DOM",
-    "standard": "WCAG 2 A/AA and WCAG 2.1 A/AA",
-    "routesAudited": 5,
-    "violationCount": 0,
-    "passed": true
+  "authorityWorkflow": {
+    "availableBudgetCents": 150000,
+    "approvedOrderTotalCents": 139910,
+    "remainingBudgetCents": 10090,
+    "supplierPurchaseOrders": 2,
+    "supplierMessages": 2,
+    "auditEvents": 6,
+    "tamperedDraftStatus": 400,
+    "tamperedDraftCode": "INVALID_DRAFT_SIGNATURE"
+  },
+  "browser": {
+    "postgresqlMode": { "passed": 8, "failed": 0 },
+    "preparedFallbackMode": { "passed": 8, "failed": 0 },
+    "accessibilitySurfacesPerMode": 5,
+    "wcagAaaViolations": 0,
+    "mobileViewportWidth": 375,
+    "mobileHorizontalOverflow": false,
+    "consoleErrorsOrWarnings": 0
   },
   "submissionAssets": {
-    "viewport": "1440x900",
     "screenshots": [
       {
         "name": "01-home-dashboard.png",
-        "bytes": 256068,
-        "sha256": "decd7561dadd6dc6fc24ae002f39ea2f743a961c9cc858bc14af66f50ed081ef"
+        "bytes": 179486,
+        "sha256": "2753bc5c5f1239508521c09998327aa1e7157858b13c904e75d683224772daf1"
       },
       {
         "name": "02-human-evidence-review.png",
-        "bytes": 158712,
-        "sha256": "7d374cb3b9311ad47fa2bfbc85eb708209b40244e7190cb78532c4b8c81310e3"
+        "bytes": 128077,
+        "sha256": "78bd0e39fe3ea7b9e2d5fbeb67fab90a5dbc0f10db7c83ecef7cc3f255304772"
       },
       {
         "name": "03-approved-supplier-orders.png",
-        "bytes": 136374,
-        "sha256": "9e38215a5751843eae382ad6613992a38d2cd6984781a57568b337358709e0a5"
+        "bytes": 97075,
+        "sha256": "aed197c14cb30a147ad25f5227cf2b1f1bf774f58c7f56aca1ea3ac45a98b316"
       },
       {
         "name": "04-trust-boundaries.png",
-        "bytes": 166533,
-        "sha256": "a6221b43b7ef7799c20f46aaec45aacb358d755fd05c4e6558c055e4155bcadc"
+        "bytes": 121411,
+        "sha256": "e73a68bc1ee70df4572c89c3dbc805ebab91a9041568c0d37fdf25dd5ae966fd"
       }
     ],
-    "draftVideo": {
-      "path": "submission/video/kasistock-ai-demo-draft.mp4",
-      "bytes": 324928,
-      "sha256": "5587e9e65cdf6d76451370c8874e123c34c53d2c389831bb1ea1d3f7942189e4"
-    }
-  },
-  "coreAuthorityWorkflow": {
-    "runtimeNode": "24.15.0",
-    "runtimeNpm": "11.12.1",
-    "homeStatus": 200,
-    "decisionStatus": 200,
-    "proposalStatus": 200,
-    "acceptedSnapshots": 4,
-    "productLabels": 16,
-    "mappingStatus": 201,
-    "mappingDecisions": 16,
-    "restockStatus": 200,
-    "restockCandidates": 4,
-    "selectedLines": 3,
-    "draftStatus": 201,
-    "draftTotalCents": 139910,
-    "draftRemainingCents": 10090,
-    "approvalStatus": 201,
-    "supplierPurchaseOrders": 2,
-    "purchaseOrderNumbers": [
-      "KSI-20260718-METRO-CASH-CARRY-01",
-      "KSI-20260718-UBUNTU-WHOLESALE-F-02"
-    ],
-    "supplierMessages": 2,
-    "auditEvents": 6,
-    "pdfStatus": 200,
-    "pdfBytes": 4507,
-    "pdfContentType": "application/pdf",
-    "tamperedDraftStatus": 400,
-    "tamperedDraftCode": "INVALID_DRAFT_SIGNATURE",
-    "evaluationStatus": 200,
-    "evaluation": {
-      "datasetVersion": "product-matching-v1",
-      "totalCases": 12,
-      "productAccuracyPercent": 91.67,
-      "authorityAccuracyPercent": 91.67,
-      "unsafeAutoMergeCount": 0,
-      "passedCases": 11,
-      "cases": [
-        {
-          "caseId": "barcode-bread",
-          "expectedProductId": "bread-albany-white-700g",
-          "actualProductId": "bread-albany-white-700g",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "alias-bread",
-          "expectedProductId": "bread-albany-white-700g",
-          "actualProductId": "bread-albany-white-700g",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "normalised-bread",
-          "expectedProductId": "bread-albany-white-700g",
-          "actualProductId": "bread-albany-white-700g",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "barcode-coke",
-          "expectedProductId": "softdrink-coke-original-2l",
-          "actualProductId": "softdrink-coke-original-2l",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "alias-coke",
-          "expectedProductId": "softdrink-coke-original-2l",
-          "actualProductId": "softdrink-coke-original-2l",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "fuzzy-coke",
-          "expectedProductId": "softdrink-coke-original-2l",
-          "actualProductId": null,
-          "expectedStatus": "requires_confirmation",
-          "actualStatus": "unmatched",
-          "passed": false
-        },
-        {
-          "caseId": "barcode-milk",
-          "expectedProductId": "milk-clover-fullcream-2l",
-          "actualProductId": "milk-clover-fullcream-2l",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "alias-milk",
-          "expectedProductId": "milk-clover-fullcream-2l",
-          "actualProductId": "milk-clover-fullcream-2l",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "fuzzy-milk",
-          "expectedProductId": "milk-clover-fullcream-2l",
-          "actualProductId": "milk-clover-fullcream-2l",
-          "expectedStatus": "requires_confirmation",
-          "actualStatus": "requires_confirmation",
-          "passed": true
-        },
-        {
-          "caseId": "barcode-maize",
-          "expectedProductId": "maize-super-5kg",
-          "actualProductId": "maize-super-5kg",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "alias-maize",
-          "expectedProductId": "maize-super-5kg",
-          "actualProductId": "maize-super-5kg",
-          "expectedStatus": "auto_confirmed",
-          "actualStatus": "auto_confirmed",
-          "passed": true
-        },
-        {
-          "caseId": "unmatched",
-          "expectedProductId": null,
-          "actualProductId": null,
-          "expectedStatus": "unmatched",
-          "actualStatus": "unmatched",
-          "passed": true
-        }
-      ]
+    "finalVideo": {
+      "path": "submission/video/kasistock-ai-demo.mp4",
+      "durationSeconds": 153.7,
+      "bytes": 5948078,
+      "sha256": "e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98"
+    },
+    "narration": {
+      "model": "gpt-4o-mini-tts",
+      "voice": "marin",
+      "aiGeneratedDisclosure": true,
+      "bytes": 2455296,
+      "sha256": "447899c0bacaddbf4b3ae654feabfc139ffa6342826066ae0615c1433016ca3e"
     }
   }
 }

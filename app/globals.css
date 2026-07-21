@@ -1,6 +1,6 @@
 :root {
   --ink: #10251f;
-  --muted: #62756e;
+  --muted: #53655f;
   --line: #dfe8e4;
   --paper: #f7faf8;
   --card: #ffffff;
@@ -532,7 +532,11 @@ main {
 }
 @media (max-width: 720px) {
   .topbar {
-    padding: 0 18px;
+    height: auto;
+    min-height: 76px;
+    padding: 12px 18px;
+    flex-wrap: wrap;
+    gap: 10px;
   }
   .statusPill {
     display: none;
@@ -560,8 +564,13 @@ main {
   .boundaryGrid {
     grid-template-columns: 1fr;
   }
+  .topbarActions {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .topbarActions .secondary {
-    display: none;
+    padding: 8px 10px;
   }
   .approvalBar {
     align-items: stretch;

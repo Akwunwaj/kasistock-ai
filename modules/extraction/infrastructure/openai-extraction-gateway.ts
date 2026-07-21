@@ -87,7 +87,7 @@ export class OpenAIExtractionGateway implements ExtractionGateway {
               ? {
                   type: "input_file",
                   filename: document.filename,
-                  file_data: document.base64Data,
+                  file_data: `data:application/pdf;base64,${document.base64Data}`,
                   detail: "high",
                 }
               : {

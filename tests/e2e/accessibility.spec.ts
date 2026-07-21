@@ -24,7 +24,7 @@ for (const route of routes) {
 test("prepared evidence review state has no WCAG A/AA violations", async ({ page }) => {
   await page.goto("/evidence");
   await page.getByRole("button", { name: "Use prepared demo" }).click();
-  await expect(page.getByText("PREPARED DEMO")).toBeVisible();
+  await expect(page.getByText("PREPARED DEMO", { exact: true })).toBeVisible();
 
   const result = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])

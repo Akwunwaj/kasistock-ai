@@ -15,9 +15,12 @@
     "submission/screenshots/04-trust-boundaries.png"
   ],
   "verification": {
-    "automatedTests": 34,
+    "normalAutomatedTests": 37,
+    "postgresIntegrationTests": 1,
+    "productionPlaywrightTestsPerMode": 8,
     "productIdentityAccuracyPercent": 91.67,
     "unsafeAutomaticMerges": 0,
-    "offlineWcagViolations": 0
+    "playwrightWcagViolations": 0,
+    "liveOpenAiModel": "gpt-5.6-sol"
   }
 }

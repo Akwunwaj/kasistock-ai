@@ -2,51 +2,52 @@
 
 ## Primary evidence required before submission
 
-Record the primary Codex `/feedback` session ID here:
+The current Codex app exposes `/feedback` as an interactive dialog, not as a callable project tool.
+After the local engineering work is final, run `/feedback` in this primary task, include logs, submit,
+and replace this placeholder with the returned real ID:
 
 ```text
-<CODEX_FEEDBACK_SESSION_ID>
+PENDING_INTERACTIVE_FEEDBACK_DIALOG
 ```
 
-## Work completed with Codex
+Do not substitute a Git commit, task title, invented UUID, or OpenAI response ID.
 
-- Product concept and judging-aligned scope.
-- Standalone Next.js architecture and repository scaffold.
-- Multimodal evidence contracts and OpenAI Responses API adapters.
-- Human verification and immutable accepted-evidence snapshots.
-- Product identity reconciliation and authority-controlled mappings.
-- Deterministic restocking calculations and budget optimiser.
-- Approval-controlled supplier purchase orders, PDFs, and messages.
-- Unit, integration, evaluation, and Playwright specifications.
-- Security boundaries, signed envelopes, hashes, and audit events.
-- Accessibility audit remediation.
-- Vercel, GitHub Actions, readiness, screenshots, and submission materials.
+## Supplied baseline versus genuine continuation
 
-## Repository evidence
+The only baseline is the verified `kasistock-ai-build-week-submission-v0.5.0.zip` archive with SHA-256
+`44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29`. It was imported without
+claiming that the current task created its pre-existing functionality.
 
-Use these files when describing Codex collaboration:
+This primary Codex task genuinely performed:
 
-- `AGENTS.md`
-- `ARCHITECTURE.md`
-- `BUILD_WEEK_LOG.md`
-- `CHANGES_V0.3.0.md`
-- `CHANGES_V0.4.0.md`
-- `CHANGES_V0.5.0.md`
-- `VERIFICATION_REPORT.md`
-- `verification-evidence.json`
-- `evals/results.json`
-- `submission/qa/accessibility-report.json`
+- PostgreSQL persistence architecture and adapter implementation.
+- Idempotent schema migration and real PostgreSQL integration testing.
+- Atomic persistence of approval, supplier orders, messages and audit events.
+- Prepared non-durable fallback preservation and readiness reporting.
+- JSONB serialisation and purchase-order uniqueness fixes discovered by real database testing.
+- Official-documentation verification of `gpt-5.6-sol` and live account validation.
+- Live multimodal shelf and PDF extraction, including a PDF data-URI compatibility fix.
+- Safe live-validation evidence with raw-versus-accepted correction proof.
+- Production Playwright and axe QA in PostgreSQL and fallback modes.
+- Desktop/mobile in-app browser QA, muted-text contrast remediation, and mobile navigation repair.
+- Captioned 2:33.7 final demonstration production with disclosed OpenAI text-to-speech narration.
+- Verification, architecture, security, handover, and submission-copy updates.
 
-## Commit guidance
+## Evidence files
 
-Create clear commits that distinguish Build Week work. Suggested sequence:
+- `BUILD_WEEK_LOG.md` - dated provenance and work log.
+- `VERIFICATION_REPORT.md` - commands, counts, findings and remaining blockers.
+- `submission/qa/live-openai-validation.json` - safe live response IDs, hashes and correction evidence.
+- `modules/persistence/` - continuation implementation.
+- `tests/integration/postgres-workflow-persistence.test.ts` - real-database authority-chain gate.
+- `scripts/validate-live-workflow.mjs` - repeatable live multimodal validator.
+- `submission/video/final-video-metadata.json` - final video duration, format and disclosure evidence.
+- `submission/video/kasistock-ai-demo.mp4` - final captioned narrated demonstration.
+- Git history: baseline import commit `aa0d075`, followed by continuation commits.
 
-```text
-feat: scaffold KasiStock AI evidence-to-order workflow
-feat: add multimodal evidence verification
-feat: add product reconciliation and deterministic restocking
-feat: add approval-controlled supplier purchase orders
-chore: prepare deployment and Build Week submission assets
-```
+## Claim discipline
 
-Do not squash away all evidence if the rules or judges need to understand what was added during the challenge period.
+Submission copy may say that Codex built the continuation items listed above. It must describe the
+archive's earlier application as the supplied baseline unless separate primary evidence proves who
+built it. The live supplier test's incorrect year must remain disclosed: structured output passed,
+but human correction was still necessary.

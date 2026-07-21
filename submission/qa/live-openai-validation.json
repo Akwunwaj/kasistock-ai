@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-07-20T20:35:30.249Z",
+  "baseUrl": "http://127.0.0.1:3118",
+  "status": "passed",
+  "authorityNote": "Synthetic QA only: this script exercises the signed human-review endpoint with known fixture ground truth; it does not bypass acceptance in the product runtime.",
+  "readiness": {
+    "status": "ready",
+    "persistence": {
+      "mode": "postgresql",
+      "configured": true,
+      "reachable": true
+    }
+  },
+  "model": "gpt-5.6-sol",
+  "shelf": {
+    "fixtureSha256": "03b7c388cab96f0432d9019b9f9f35ba7e66bc5cd6866a52523d87ca66ec7e02",
+    "responseId": "resp_00dd213e03c5662c016a5e86822778819f80c9c3de0e01c7ce",
+    "mode": "live",
+    "persistence": {
+      "mode": "postgresql",
+      "durable": true
+    },
+    "extractedProducts": [
+      {
+        "rawProductName": "KASI MAIZE",
+        "visiblePackSize": "1KG",
+        "estimatedQuantity": 4,
+        "confidence": "high"
+      },
+      {
+        "rawProductName": "KASI BEANS",
+        "visiblePackSize": "410G",
+        "estimatedQuantity": 3,
+        "confidence": "high"
+      },
+      {
+        "rawProductName": "KASI OIL",
+        "visiblePackSize": "750ML",
+        "estimatedQuantity": 2,
+        "confidence": "high"
+      }
+    ],
+    "reviewIssueCount": 0,
+    "acceptedSnapshotId": "2ea8d060-e75e-4dea-9419-66d898e6cee6",
+    "acceptedEvidenceHash": "5f0bb9ed9aeae54a53d87fbefc9ea9c0c529f04403beb7988c2b8e8766b59b03",
+    "acceptancePersistence": {
+      "mode": "postgresql",
+      "durable": true
+    }
+  },
+  "supplierCatalogue": {
+    "fixtureSha256": "906b0283950333281a8a676450fd07466f7af86eda7f8d3b615bf156b0683910",
+    "responseId": "resp_02ddba0c272402e1016a5e86893d3481a08aebe7c76e6de728",
+    "mode": "live",
+    "persistence": {
+      "mode": "postgresql",
+      "durable": true
+    },
+    "supplierName": "KASI WHOLESALE",
+    "rawCatalogueDate": "2025-07-20",
+    "acceptedCatalogueDate": "2026-07-20",
+    "dateWasCorrected": true,
+    "extractedOffers": [
+      ["Kasi Maize Meal 1kg", 18000, 10, 1800],
+      ["Kasi Baked Beans 410g", 15600, 12, 1300],
+      ["Kasi Sunflower Oil 750ml", 22800, 6, 3800]
+    ],
+    "reviewIssueCount": 0,
+    "acceptedSnapshotId": "2d91320c-d3ad-48f6-9423-69f5f913084c",
+    "acceptedEvidenceHash": "aaf64d66626dcc0731a982d71723b8fd3f16a49ea0c30cf75fc5cb6d4df7241d",
+    "acceptancePersistence": {
+      "mode": "postgresql",
+      "durable": true
+    }
+  }
+}

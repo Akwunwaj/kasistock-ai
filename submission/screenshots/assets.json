@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-18T09:03:24.602Z",
-  "baseUrl": "http://127.0.0.1:3015",
-  "mode": "offline server-rendered DOM",
+  "generatedAt": "2026-07-20T20:47:00.000Z",
+  "baseUrl": "http://127.0.0.1:3118",
+  "mode": "production server with PostgreSQL persistence",
   "viewport": "1440x900",
   "screenshots": [
     "01-home-dashboard.png",
@@ -9,5 +9,7 @@
     "03-approved-supplier-orders.png",
     "04-trust-boundaries.png"
   ],
-  "draftVideo": "submission/video/kasistock-ai-demo-draft.mp4"
+  "finalVideo": "submission/video/kasistock-ai-demo.mp4",
+  "finalVideoDurationSeconds": 153.7,
+  "finalVideoSha256": "e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98"
 }

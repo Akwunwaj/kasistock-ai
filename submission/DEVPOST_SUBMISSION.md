@@ -34,6 +34,8 @@ KasiStock AI implements one complete authority-controlled workflow:
 6. The merchant can edit pack quantities within accepted demand and budget ceilings.
 7. The server rebuilds and signs the draft before explicit approval.
 8. Approved supplier-specific purchase orders, PDFs, WhatsApp-ready messages, and audit evidence are generated.
+9. With PostgreSQL configured, every accepted authority layer is durably persisted; the prepared
+   judging path remains available without claiming durability.
 
 The prepared demonstration uses a R1,500 budget and produces a R1,399.10 approved order, leaving R100.90 unspent.
 
@@ -49,7 +51,10 @@ The authority model is intentionally separated:
 
 Integrity controls include source SHA-256 fingerprints, HMAC-signed extraction and draft envelopes, accepted-evidence hashes, accepted mapping hashes, recommendation hashes, approval hashes, and supplier purchase-order hashes.
 
-Codex was used throughout architecture design, repository scaffolding, feature implementation, contract design, test generation, evaluation construction, security review, accessibility improvements, deployment preparation, and submission asset production.
+The supplied v0.5.0 archive provided the working evidence-to-order baseline. In the primary Codex
+continuation task, Codex genuinely added PostgreSQL persistence and migration tooling, atomic approval
+writes, real-database tests, live GPT-5.6 shelf/PDF validation, a PDF input fix, purchase-order
+collision hardening, browser/accessibility fixes, and refreshed engineering and submission evidence.
 
 ## Challenges
 
@@ -59,13 +64,19 @@ A second challenge was reconciling inconsistent supplier and sales labels. KasiS
 
 The final challenge was producing a judging experience that remains reliable when an external model call is unavailable. The application therefore includes prepared evidence that passes through the same signing, human review, calculation, and approval controls as live evidence.
 
+Live validation reinforced that boundary: GPT-5.6 extracted every supplier price and case quantity
+correctly but read a visible 2026 date as 2025. KasiStock preserved the raw response and accepted a
+separate corrected snapshot rather than allowing valid JSON to become unquestioned truth.
+
 ## Accomplishments
 
 - Complete evidence-to-approved-order workflow.
-- 34 passing unit, integration, and evaluation tests.
+- 37 passing normal automated tests plus a real PostgreSQL authority-chain integration test.
 - Twelve-case product-identity evaluation with 91.67% accuracy and zero unsafe automatic merges.
 - Four submission screenshots and a draft MP4 generated reproducibly from the app.
-- Zero WCAG A/AA violations across five judged server-rendered surfaces in the offline axe audit.
+- Eight passing production Playwright tests in both PostgreSQL and prepared-fallback modes, including
+  five axe surfaces with zero WCAG A/AA violations.
+- Live `gpt-5.6-sol` shelf and supplier PDF extraction with safe response-ID evidence.
 - Production build, secure headers, readiness checks, Vercel configuration, and GitHub Actions CI.
 - Signed, supplier-specific PDF purchase orders and WhatsApp-ready messages.
 
@@ -75,11 +86,14 @@ AI is most useful in this workflow where the data is messy: interpreting images,
 
 ## What's next
 
-Post-competition work would add durable PostgreSQL repositories, authentication, multi-tenancy, live supplier integrations, WhatsApp Cloud API delivery, replenishment feedback loops, and broader product and language coverage.
+Post-competition work would add authentication, multi-tenancy, production backups, a transactional
+delivery outbox, live supplier integrations, WhatsApp Cloud API delivery, replenishment feedback
+loops, and broader product and language coverage.
 
 ## Built with
 
-Next.js, React, TypeScript, OpenAI Responses API, GPT-5.6, Codex, Zod, PostgreSQL schema, pdf-lib, Vitest, Playwright, axe-core, GitHub Actions, and Vercel deployment configuration.
+Next.js, React, TypeScript, OpenAI Responses API, GPT-5.6 Sol, Codex, Zod, PostgreSQL, node-postgres,
+pdf-lib, Vitest, Playwright, axe-core, GitHub Actions, and Vercel deployment configuration.
 
 ## Links to complete before submission
 

@@ -14,21 +14,23 @@
 - [x] Explicit purchase approval and immutable approval evidence.
 - [x] Supplier-specific PDF purchase orders and WhatsApp-ready messages.
 - [x] Complete audit timeline and tamper failure modes.
-- [ ] Execute and record live OpenAI validation with the user's existing key.
+- [x] Execute and record live `gpt-5.6-sol` validation with the existing key.
+- [x] Persist the complete authority chain durably in PostgreSQL when configured.
+- [x] Preserve and label the prepared no-database fallback as non-durable.
 
 ## Engineering evidence
 
 - [x] Standalone Build Week repository.
 - [x] `AGENTS.md` operating contract.
 - [x] Architecture and trust-boundary documentation.
-- [x] Exact Node 24.15.0/npm 11.12.1 clean installation and build.
-- [x] Thirty-four automated unit, integration and evaluation tests.
+- [x] Node 24/npm 11 clean installation and production build.
+- [x] Thirty-seven normal automated tests plus one real PostgreSQL integration test.
 - [x] Core authority-to-PDF runtime evidence.
 - [x] Product-matching dataset with measured results and zero unsafe automatic merges.
 - [x] Production readiness and security-header checks.
-- [x] Five-surface offline accessibility audit with zero WCAG A/AA violations.
+- [x] Five-surface Playwright axe audit with zero WCAG A/AA violations.
 - [x] GitHub Actions workflow for quality and Playwright browser checks.
-- [ ] Run full interactive Playwright suite in an unrestricted browser environment.
+- [x] Run full interactive Playwright suite against PostgreSQL and fallback production modes.
 - [ ] Record the primary Codex `/feedback` session ID.
 
 ## Submission assets
@@ -39,7 +41,8 @@
 - [x] Three-minute narration and shot script created.
 - [x] Sixteen-second visual timing-reference MP4 generated.
 - [x] Copy-ready Devpost JSON and Markdown created.
-- [ ] Record and publish the final narrated YouTube demonstration under three minutes.
+- [x] Produce the captioned final narrated demonstration under three minutes (2:33.7 locally).
+- [ ] Publish the final narrated demonstration to YouTube.
 - [ ] Publish or share the repository with the judges.
 - [ ] Add deployment, repository, YouTube and Codex-session links.
 - [ ] Test every public link in a private browser window.

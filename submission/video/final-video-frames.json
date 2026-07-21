@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-07-21T06:59:19.489Z",
+  "baseUrl": "http://127.0.0.1:3118",
+  "viewport": "1920x1080",
+  "frames": [
+    {
+      "filename": "01-title.png",
+      "label": "Turn limited cash into the right stock."
+    },
+    {
+      "filename": "02-home.png",
+      "label": "Problem and prepared scenario"
+    },
+    {
+      "filename": "03-evidence.png",
+      "label": "Human evidence review"
+    },
+    {
+      "filename": "04-mapping.png",
+      "label": "Human-confirmed product identity mapping"
+    },
+    {
+      "filename": "05-optimisation.png",
+      "label": "Deterministic budget optimisation"
+    },
+    {
+      "filename": "06-signed-draft.png",
+      "label": "Server-rebuilt signed approval draft"
+    },
+    {
+      "filename": "07-approved.png",
+      "label": "Approved supplier orders and immutable audit evidence"
+    },
+    {
+      "filename": "08-architecture.png",
+      "label": "Separation of authority"
+    },
+    {
+      "filename": "09-verification.png",
+      "label": "Live model, database, browser, and accessibility evidence"
+    },
+    {
+      "filename": "10-end.png",
+      "label": "The model interprets. Code calculates. The merchant decides."
+    }
+  ]
+}

@@ -7,7 +7,7 @@ shelf evidence, supplier catalogues, accepted sales history, and a cash budget i
 budget-constrained restocking plan, then requires explicit merchant approval before generating
 supplier purchase orders.
 
-## Submission release — v0.5.0
+## Submission release — v0.5.0 baseline plus Codex continuation
 
 The repository now contains the complete evidence-to-order application plus deployment and
 submission assets:
@@ -22,6 +22,9 @@ submission assets:
 - A 16-second draft MP4 and a complete sub-three-minute narration script.
 - Copy-ready Devpost content, deployment runbook, Codex evidence guidance, and publication
   checklist.
+- Optional durable PostgreSQL persistence across every accepted authority layer, while retaining the
+  no-database prepared judging fallback.
+- Live `gpt-5.6-sol` image and PDF validation with safe response-ID evidence.
 
 ## Evidence authority
 
@@ -103,6 +106,7 @@ purchase orders.
 - React 19.2.7
 - TypeScript 6.0.3
 - OpenAI JavaScript SDK 6.48.0
+- node-postgres 8.22.0
 - Zod 4.4.3
 - pdf-lib 1.17.1
 - ESLint 9.39.1
@@ -128,14 +132,26 @@ OPENAI_API_KEY=<existing project key>
 OPENAI_MODEL=<GPT-5.6 model identifier available to the project>
 EVIDENCE_SIGNING_SECRET=<at least 32 random characters>
 APP_BASE_URL=http://localhost:3000
+DATABASE_URL=<optional locally; required for durable production evidence>
 ```
 
-The repository retains the earlier `gpt-5.6-sol` default, but the exact model ID must be validated
-against the API project before deployment:
+The explicit flagship identifier `gpt-5.6-sol` was confirmed in current OpenAI model guidance and
+validated against the configured API project on 20 July 2026. Re-run the safe check before deployment:
 
 ```powershell
 npm run validate:openai
 ```
+
+For durable persistence, start PostgreSQL, apply the idempotent schema migration, and then run the
+application:
+
+```powershell
+npm run db:migrate
+npm run dev
+```
+
+If `DATABASE_URL` is absent, the prepared judging flow remains available and the API explicitly
+reports `prepared_fallback`; it does not claim durable storage.
 
 No OpenAI key is required for the prepared demonstration path.
 
@@ -192,6 +208,7 @@ npm run test
 npm run evals
 npm run build
 npm run audit:a11y
+npm run validate:live-workflow
 ```
 
 Browser tests with Playwright-managed Chromium:
@@ -209,7 +226,9 @@ npm run capture:submission
 
 ## Evaluation and accessibility evidence
 
-- Automated unit, integration, and evaluation tests: **34 passing**.
+- Normal automated suite: **37 passing, 1 conditional PostgreSQL test skipped**.
+- Real PostgreSQL authority-chain integration: **1 passing** when `TEST_DATABASE_URL` is set.
+- Production Playwright suite: **8 passing** in both PostgreSQL and prepared-fallback modes.
 - Product-identity evaluation: **91.67%**.
 - Unsafe automatic product merges: **0**.
 - Offline server-rendered DOM audit: **zero WCAG A/AA violations across five judged surfaces**.
@@ -239,6 +258,7 @@ modules/reconciliation/ Identity proposals, mapping authority, and evaluation sc
 modules/restocking/     Evidence-bound deterministic calculations
 modules/optimisation/   Budget-constrained allocation
 modules/purchasing/     Draft, approval, supplier outputs, signatures, and PDF generation
+modules/persistence/    Prepared fallback and PostgreSQL workflow adapters
 fixtures/                Fictional demonstration data and generated sample PDF
 db/                      PostgreSQL target schema
 tests/                   Unit, integration, evaluation, and browser tests
@@ -250,6 +270,17 @@ submission/              Devpost copy, deployment guides, screenshots, QA, and d
 
 ## Production boundary
 
-The complete competition workflow is implemented and verified with in-memory server contracts.
-`db/schema.sql` defines the transactional persistence target, but durable database repositories,
-authentication, multi-tenancy, and production WhatsApp delivery remain post-competition work.
+With `DATABASE_URL`, accepted evidence, mappings, scenarios, calculations, recommendations, signed
+drafts, approvals, supplier orders, messages, and audit events are durably stored in PostgreSQL.
+Approval and every downstream order artifact are persisted in one database transaction. Without a
+database, the prepared judging flow remains deliberately non-durable. Authentication, tenant
+isolation, production backups, a transactional delivery outbox, and live WhatsApp delivery remain
+post-competition work.
+
+## Codex provenance
+
+The supplied ZIP is the only baseline. The continuation commit documents what this primary Codex
+task genuinely added: PostgreSQL persistence, migration and real-database tests, readiness reporting,
+live GPT-5.6 image/PDF validation, the PDF data-URI fix, purchase-order collision hardening, mobile
+navigation and contrast fixes, browser QA, and refreshed evidence. Earlier archive history is treated
+as supplied baseline work, not retroactively claimed as work performed in this task.

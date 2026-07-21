@@ -20,6 +20,9 @@
 /coverage
 /playwright-report
 /test-results
+*.tsbuildinfo
+/submission/video/frames/
+/output/video-qa-*.png
 
 # OS and editor files
 .DS_Store

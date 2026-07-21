@@ -128,7 +128,7 @@ function buildSupplierPurchaseOrders(
       const date = johannesburgDateStamp(generatedAt);
       const initial = supplierPurchaseOrderSchema.parse({
         purchaseOrderId: purchaseOrderIds?.[index] ?? randomUUID(),
-        purchaseOrderNumber: `KSI-${date}-${supplierCode(supplierId)}-${String(index + 1).padStart(2, "0")}`,
+        purchaseOrderNumber: `KSI-${date}-${supplierCode(supplierId)}-${draft.draftHash.slice(0, 8).toUpperCase()}-${String(index + 1).padStart(2, "0")}`,
         supplierId,
         supplierName,
         merchant: draft.merchant,

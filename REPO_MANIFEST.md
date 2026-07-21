@@ -2,8 +2,8 @@
 
 ## Release purpose
 
-Submission-ready Build Week source release with deployment hardening, accessibility evidence,
-judging screenshots, video script, Devpost copy and publication instructions.
+Submission-ready Build Week source release plus a genuine Codex continuation adding durable
+PostgreSQL authority records, live GPT-5.6 evidence, browser/accessibility QA, and final media.
 
 ## Root governance and release files
 
@@ -14,6 +14,7 @@ BUILD_WEEK_LOG.md
 CHANGES_V0.3.0.md
 CHANGES_V0.4.0.md
 CHANGES_V0.5.0.md
+CHANGES_CODEX_CONTINUATION.md
 COMPATIBILITY.md
 DEMO_SCRIPT.md
 README.md
@@ -53,12 +54,18 @@ submission/SCREENSHOT_INDEX.md
 submission/VIDEO_SCRIPT_3_MINUTES.md
 submission/devpost-submission.json
 submission/qa/accessibility-report.json
+submission/qa/live-openai-validation.json
 submission/screenshots/01-home-dashboard.png
 submission/screenshots/02-human-evidence-review.png
 submission/screenshots/03-approved-supplier-orders.png
 submission/screenshots/04-trust-boundaries.png
 submission/screenshots/assets.json
 submission/video/kasistock-ai-demo-draft.mp4
+submission/video/kasistock-ai-demo.mp4
+submission/video/kasistock-ai-demo.srt
+submission/video/kasistock-ai-narration.mp3
+submission/video/final-video-frames.json
+submission/video/final-video-metadata.json
 ```
 
 ## Deployment files
@@ -90,11 +97,12 @@ tsconfig.tsbuildinfo
 ## Verification summary
 
 ```text
-Exact clean toolchain:             Node 24.15.0 / npm 11.12.1
-Automated tests:                   34 passed / 0 failed
+Exact clean toolchain:             Node 24.18.0 / npm 11.16.0
+Automated tests:                   37 passed / 0 failed, 1 conditional skip
+Real PostgreSQL integration:       1 passed / 0 failed
 Production build:                  passed
-Production route checks:           13 passed
-Offline accessibility violations: 0
+Production Playwright suites:      8/8 PostgreSQL, 8/8 fallback
+Playwright accessibility:          5 surfaces, 0 WCAG A/AA violations
 Submission screenshots:            4
-Draft reference MP4:               generated
+Final narrated MP4:                2:33.7, captioned, generated
 ```

@@ -3,12 +3,12 @@
 ## Public application
 
 - [ ] Create or select the GitHub repository.
-- [ ] Push the complete v0.5.0 source with meaningful commits.
+- [ ] Push the verified v0.5.0 baseline plus continuation with meaningful commits.
 - [ ] Import the repository into Vercel.
 - [ ] Configure production environment variables.
 - [ ] Confirm `/api/readiness` returns HTTP 200.
 - [ ] Confirm `/judge` requires no sign-up.
-- [ ] Run one live GPT-5.6 validation.
+- [x] Run live GPT-5.6 shelf and PDF validation locally.
 - [ ] Complete the prepared decision and approval workflow.
 - [ ] Download and open both purchase-order PDFs.
 
@@ -20,14 +20,15 @@
 - [ ] Primary Codex `/feedback` session ID recorded.
 - [ ] Build Week commits are clearly identifiable.
 - [ ] GitHub Actions passes.
+- [ ] Confirm repository visibility and licence with the owner before making it public or adding a licence.
 
 ## Video
 
-- [ ] Narrated demonstration is under three minutes.
+- [x] Narrated demonstration is under three minutes (2:33.7).
 - [ ] Public or unlisted YouTube URL works without requesting access.
-- [ ] Captions are enabled.
-- [ ] No secrets, private tabs, or personal notifications are visible.
-- [ ] Product problem, GPT-5.6 use, Codex use, deterministic boundary, approval, and impact are shown.
+- [x] Captions are burned in and an SRT sidecar is available.
+- [x] No secrets, private tabs, personal notifications, or local paths are visible.
+- [x] Product problem, GPT-5.6 use, Codex use, deterministic boundary, approval, and impact are shown.
 
 ## Devpost
 

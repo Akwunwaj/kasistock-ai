@@ -1,5 +1,5 @@
 const required = ["EVIDENCE_SIGNING_SECRET"];
-const recommended = ["OPENAI_API_KEY", "OPENAI_MODEL", "APP_BASE_URL"];
+const recommended = ["OPENAI_API_KEY", "OPENAI_MODEL", "APP_BASE_URL", "DATABASE_URL"];
 const problems = [];
 
 for (const name of required) {
@@ -21,6 +21,18 @@ if (baseUrl) {
     }
   } catch {
     problems.push("APP_BASE_URL is not a valid absolute URL.");
+  }
+}
+
+const databaseUrl = process.env.DATABASE_URL?.trim();
+if (databaseUrl) {
+  try {
+    const url = new URL(databaseUrl);
+    if (!["postgres:", "postgresql:"].includes(url.protocol)) {
+      problems.push("DATABASE_URL must use the postgres or postgresql protocol.");
+    }
+  } catch {
+    problems.push("DATABASE_URL is not a valid PostgreSQL URL.");
   }
 }
 

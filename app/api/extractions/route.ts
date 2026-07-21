@@ -23,6 +23,8 @@ import {
   demoShelfExtraction,
   demoUbuntuSupplierExtraction,
 } from "@/fixtures/extraction/demo-extractions";
+import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
+import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -73,7 +75,8 @@ export async function GET(request: Request) {
     mode: "demo",
     output,
   });
-  return NextResponse.json({ envelope, ...signExtractionEnvelope(envelope) });
+  const persistence = await getWorkflowPersistence().recordExtraction(envelope);
+  return NextResponse.json({ envelope, ...signExtractionEnvelope(envelope), persistence });
 }
 
 export async function POST(request: Request) {
@@ -107,7 +110,8 @@ export async function POST(request: Request) {
         mode: "live",
         output,
       });
-      return NextResponse.json({ envelope, ...signExtractionEnvelope(envelope) });
+      const persistence = await getWorkflowPersistence().recordExtraction(envelope);
+      return NextResponse.json({ envelope, ...signExtractionEnvelope(envelope), persistence });
     }
 
     const model = getExtractionModel();
@@ -138,8 +142,12 @@ export async function POST(request: Request) {
       output: result.output,
     });
 
-    return NextResponse.json({ envelope, ...signExtractionEnvelope(envelope) });
+    const persistence = await getWorkflowPersistence().recordExtraction(envelope);
+    return NextResponse.json({ envelope, ...signExtractionEnvelope(envelope), persistence });
   } catch (error) {
+    if (error instanceof WorkflowPersistenceError) {
+      return errorResponse(503, "PERSISTENCE_UNAVAILABLE", error.message);
+    }
     if (error instanceof EvidenceFileError || error instanceof SalesCsvError) {
       return errorResponse(400, error.code, error.message);
     }

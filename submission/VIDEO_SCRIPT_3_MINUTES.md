@@ -2,6 +2,11 @@
 
 Target duration: **2 minutes 35 seconds**. Keep the final public video below three minutes.
 
+Produced artifact: `submission/video/kasistock-ai-demo.mp4` is 2:33.7 at 1920 x 1080. It uses a
+clearly disclosed OpenAI built-in AI voice, includes 21 burned-in captions, and has a matching SRT
+sidecar. The longer final narration retains the same six-part story while truthfully documenting
+the durable PostgreSQL continuation and the live model date correction.
+
 ## 0:00–0:15 — Problem
 
 **Visual:** Home dashboard and R1,500 budget.
@@ -44,11 +49,14 @@ Target duration: **2 minutes 35 seconds**. Keep the final public video below thr
 
 ## 2:20–2:35 — Engineering evidence
 
-**Visual:** Architecture page, evaluation result, and test summary.
+**Visual:** Architecture page, PostgreSQL durability indicator, and continuation test summary.
 
 **Voice-over:**
 
-> Codex helped build the architecture, contracts, tests, evaluations, accessibility fixes, and submission release. The result is trustworthy AI by separation of authority: the model interprets, deterministic code calculates, and the merchant decides.
+> Starting from the verified submission archive, this Codex task added durable PostgreSQL authority
+> records, live GPT-5.6 validation, real database and browser tests, and accessibility fixes. The
+> result is trustworthy AI by separation of authority: the model interprets, deterministic code
+> calculates, and the merchant decides.
 
 ## Recording checklist
 

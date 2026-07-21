@@ -10,6 +10,8 @@ import {
 } from "@/modules/purchasing/application/order-envelope-signature";
 import { signedPurchaseOrderDraftSchema } from "@/modules/purchasing/domain/contracts";
 import { verifyPurchaseOrderDraftHash } from "@/modules/purchasing/application/purchase-order-hashes";
+import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
+import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -49,8 +51,18 @@ export async function POST(request: Request) {
       approvedBy: input.approvedBy,
       confirmed: input.confirmed,
     });
-    return NextResponse.json({ envelope: signApprovedOrderBundle(bundle) }, { status: 201 });
+    const persistence = await getWorkflowPersistence().recordApprovedOrderBundle(bundle);
+    return NextResponse.json(
+      { envelope: signApprovedOrderBundle(bundle), persistence },
+      { status: 201 },
+    );
   } catch (error) {
+    if (error instanceof WorkflowPersistenceError) {
+      return NextResponse.json(
+        { error: { code: "PERSISTENCE_UNAVAILABLE", message: error.message } },
+        { status: 503 },
+      );
+    }
     if (error instanceof PurchaseOrderApprovalError) {
       return NextResponse.json(
         { error: { code: error.code, message: error.message } },

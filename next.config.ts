@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   typedRoutes: true,
+  turbopack: {
+    root: process.cwd(),
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

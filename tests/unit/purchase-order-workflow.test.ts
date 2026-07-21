@@ -123,6 +123,32 @@ describe("approval-controlled purchase-order workflow", () => {
     }
   });
 
+  it("creates distinct purchase-order numbers for different drafts approved on the same day", () => {
+    const firstDraft = buildPurchaseOrderDraft(draftInput());
+    const secondDraft = buildPurchaseOrderDraft({
+      ...draftInput(),
+      now: "2026-07-18T13:00:00.000Z",
+      draftId: "55555555-5555-4555-8555-555555555556",
+    });
+    const first = approvePurchaseOrder({
+      draft: firstDraft,
+      approvedBy: "Thandi Mokoena",
+      confirmed: true,
+      now: "2026-07-18T14:00:00.000Z",
+    });
+    const second = approvePurchaseOrder({
+      draft: secondDraft,
+      approvedBy: "Thandi Mokoena",
+      confirmed: true,
+      now: "2026-07-18T15:00:00.000Z",
+    });
+
+    expect(firstDraft.draftHash).not.toBe(secondDraft.draftHash);
+    expect(first.purchaseOrders.map((order) => order.purchaseOrderNumber)).not.toEqual(
+      second.purchaseOrders.map((order) => order.purchaseOrderNumber),
+    );
+  });
+
   it("rejects a draft modified after the server locked it", () => {
     const draft = buildPurchaseOrderDraft(draftInput());
     const tampered = { ...draft, totalCostCents: draft.totalCostCents + 100 };

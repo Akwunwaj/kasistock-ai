@@ -108,17 +108,28 @@ modules/restocking/
 modules/optimisation/
 modules/purchasing/
 modules/audit/
+modules/persistence/
 ```
 
-## Persistence target
+## Persistence implementation
 
-`db/schema.sql` separates uploads, extraction jobs, accepted evidence, mapping sets, calculations,
-recommendations, signed purchase-order drafts, approval records, supplier orders, line items,
-supplier messages and audit events.
+`db/schema.sql` separates uploads, raw extraction jobs, human-accepted evidence, mapping sets,
+calculations, recommendations, signed purchase-order drafts, approval records, supplier orders,
+line items, supplier messages and audit events. `scripts/migrate-database.mjs` applies the schema
+idempotently and records a content-derived migration ID.
+
+`PostgresWorkflowPersistence` uses parameterised statements and single-client transactions. The
+approval write atomically records the verified draft, approval, supplier orders and lines, supplier
+messages, all six audit events, and final status transitions. Raw model output remains distinct from
+accepted corrections. Canonical catalogue rows and governed aliases are seeded as server-owned data.
+
+When `DATABASE_URL` is absent, `PreparedWorkflowPersistence` returns an explicit non-durable receipt.
+This preserves the prepared no-API judging experience without presenting memory-only state as durable.
+When a database is configured but unreachable, affected writes fail closed with a safe 503 response.
 
 ## Post-competition production gates
 
-- PostgreSQL repositories and transactional outbox persistence.
+- Transactional delivery outbox and retry workers.
 - Authentication, tenant isolation and durable merchant sessions.
 - Bounded dynamic-programming optimiser.
 - Larger extraction, matching and recommendation evaluation datasets.
@@ -135,16 +146,17 @@ The public competition deployment adds no new financial authority. It exposes:
 - `/submission-preview/*` for deterministic media generation from server-rendered evidence and
   approved-order states.
 
-Deployment uses a Git-based Vercel build and Node.js 24 CI. OpenAI and signing credentials remain
-server-only. The prepared judging workflow remains available when live OpenAI access is unavailable.
+Deployment uses a Git-based Vercel build and Node.js 24 CI. OpenAI, signing, and database credentials
+remain server-only. The prepared judging workflow remains available when live OpenAI access or a
+database is unavailable.
 
 ### Accessibility verification boundary
 
 The release contains two complementary layers:
 
 1. Full Playwright interaction specifications for home, evidence, decision, and approval workflows.
-2. An offline server-rendered DOM audit using axe-core for judged static and preview surfaces.
+2. Production-server Playwright interaction and axe checks using local system Chrome.
 
-The packaging environment's managed Chromium blocks navigation to local HTTP addresses, so full
-interaction execution is delegated to GitHub Actions or a normal local Playwright installation.
-This limitation does not affect the product routes, build, unit tests, or offline WCAG audit.
+The final continuation gate executed eight browser tests against both PostgreSQL-backed and explicit
+prepared-fallback production servers. A 375-pixel mobile browser review also verified that all primary
+navigation remains available without horizontal overflow.

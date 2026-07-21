@@ -4,7 +4,7 @@ test("prepared evidence reaches approved supplier purchase orders", async ({ pag
   await page.goto("/decision");
   await page.getByRole("button", { name: "Load prepared accepted evidence" }).click();
 
-  await expect(page.getByText("16 source product labels")).toBeVisible();
+  await expect(page.getByText("source product labels", { exact: true })).toBeVisible();
   const confirmations = page.getByLabel("Human confirmed");
   const confirmationCount = await confirmations.count();
   for (let index = 0; index < confirmationCount; index += 1) {

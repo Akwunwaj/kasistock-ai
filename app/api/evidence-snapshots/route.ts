@@ -3,6 +3,9 @@ import {
   buildAcceptedEvidenceSnapshot,
   EvidenceAcceptanceError,
 } from "@/modules/evidence/application/build-accepted-evidence-snapshot";
+import { extractionEnvelopeSchema } from "@/modules/evidence/domain/contracts";
+import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
+import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -16,8 +19,16 @@ export async function POST(request: Request) {
       reviewDecisions: body.reviewDecisions,
       acceptedBy: typeof body.acceptedBy === "string" ? body.acceptedBy : "demo-merchant",
     });
-    return NextResponse.json({ snapshot }, { status: 201 });
+    const envelope = extractionEnvelopeSchema.parse(body.envelope);
+    const persistence = await getWorkflowPersistence().recordAcceptedEvidence(envelope, snapshot);
+    return NextResponse.json({ snapshot, persistence }, { status: 201 });
   } catch (error) {
+    if (error instanceof WorkflowPersistenceError) {
+      return NextResponse.json(
+        { error: { code: "PERSISTENCE_UNAVAILABLE", message: error.message } },
+        { status: 503 },
+      );
+    }
     if (error instanceof EvidenceAcceptanceError) {
       return NextResponse.json(
         { error: { code: error.code, message: error.message } },

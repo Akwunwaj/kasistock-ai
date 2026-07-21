@@ -1,181 +1,144 @@
-# KasiStock AI v0.5.0 Verification Report
+# KasiStock AI continuation verification report
 
-## Release scope
+Verification date: **21 July 2026 SAST**
 
-Deployment hardening and OpenAI Build Week submission asset production.
+## Baseline integrity
+
+- Source archive: `kasistock-ai-build-week-submission-v0.5.0.zip`
+- Expected and observed SHA-256:
+  `44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29`
+- Archive path review: 220 entries, one repository root, no unsafe extraction paths.
+- Imported baseline commit: `aa0d075`.
 
 ## Verified toolchain
 
-```text
-Node.js:              24.15.0
-npm:                  11.12.1
-Next.js:              16.2.10
-React:                19.2.7
-TypeScript:           6.0.3
-OpenAI Node SDK:      6.48.0
-Zod:                  4.4.3
-pdf-lib:              1.17.1
-Vitest:               4.1.10
-Playwright:           1.61.1
-axe-core Playwright:  4.12.1
-```
+The continuation ran with Node.js 24.18.0 and npm 11.16.0. The repository's approved application
+versions remain pinned, including Next.js 16.2.10, React 19.2.7, TypeScript 6.0.3, OpenAI SDK
+6.48.0, Zod 4.4.3, pdf-lib 1.17.1, Vitest 4.1.10, Playwright 1.61.1, axe-core Playwright 4.12.1,
+and node-postgres 8.22.0.
 
-## Clean-source gates
-
-A dependency-free copy was created and verified using the exact declared Node and npm versions.
+## Local quality gates
 
 ```text
-Clean npm ci:                         PASSED
-Prettier formatting:                  PASSED
-ESLint with zero warnings:            PASSED
-Next route type generation:           PASSED
-TypeScript strict type checking:      PASSED
-Automated test files:                 17 PASSED
-Automated tests:                      34 PASSED
-Automated test failures:              0
-Product-matching evaluation:          PASSED
-Next.js production build:             PASSED
-Production environment validation:    PASSED
+npm ci:                              PASSED
+Prettier:                            PASSED
+ESLint, zero warnings:               PASSED
+Next route type generation:          PASSED
+TypeScript strict checking:          PASSED
+Normal test files:                   18 passed, 1 conditional DB test skipped
+Normal tests:                        37 passed, 1 conditional DB test skipped
+Next.js production build:            PASSED (23 routes)
+Product matching eval:               PASSED (91.67%, 0 unsafe automatic merges)
+git diff --check:                    PASSED
 ```
 
-## Production runtime verification
+The initial Next.js build exposed incorrect workspace-root inference from a parent lockfile.
+`turbopack.root` is now explicitly the repository root.
 
-The built production server was started with temporary, non-release validation values. No real API
-key or signing secret was written to the repository.
+## PostgreSQL durability
+
+A disposable `postgres:17` container was used on localhost port 55432.
 
 ```text
-Home dashboard:                       HTTP 200
-Judge guide:                          HTTP 200
-Evidence workspace:                   HTTP 200
-Decision workspace:                   HTTP 200
-Architecture page:                    HTTP 200
-Evidence submission preview:          HTTP 200
-Approved-order submission preview:    HTTP 200
-Health endpoint:                      HTTP 200
-Readiness endpoint:                   HTTP 200
-Open Graph image:                     HTTP 200
-Web manifest:                         HTTP 200
-robots.txt:                           HTTP 200
-sitemap.xml:                          HTTP 200
+First schema migration:              PASSED, applied=true
+Second schema migration:             PASSED, applied=false (idempotent)
+Real database integration test:      1 passed
+Accepted evidence rows:              4 in the isolated integration scenario
+Accepted mapping set:                1
+Approved scenario/draft/approval:    1 each
+Supplier orders/messages:            persisted
+Audit events:                        6
+Atomic rollback/client release:      covered by adapter and test path
 ```
 
-The readiness endpoint returned `status: ready` with all four Boolean checks passing.
+The real-database run found and fixed two defects that mocked tests did not reveal: JSON arrays needed
+explicit JSON serialisation for `jsonb`, and same-day purchase-order numbers needed a draft-hash
+component to avoid unique-key collisions.
 
-## Security response headers
+## Live OpenAI validation
 
-The production response included:
+Current official guidance identifies `gpt-5.6-sol` as the explicit flagship model. The configured
+project key was reused without printing it.
 
 ```text
-Cross-Origin-Opener-Policy: same-origin
-Permissions-Policy: camera=(), geolocation=(), microphone=()
-Referrer-Policy: strict-origin-when-cross-origin
-Strict-Transport-Security: max-age=31536000; includeSubDomains
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
+Minimal Responses API smoke test:    PASSED
+Model requested:                     gpt-5.6-sol
+Response ID:                         resp_0ef04ac8d1cf545f016a5e81d3b2dc81a38cc018604770f270
+Latency:                             2721 ms
+Synthetic shelf extraction:          PASSED (4 maize, 3 beans, 2 oil)
+Synthetic supplier PDF extraction:   PASSED (3 exact integer-cent offers)
+Persistence receipts:                postgresql, durable=true
 ```
 
-The readiness endpoint reports only Boolean configuration status and does not expose secret values.
+The first live PDF request failed because the SDK requires a
+`data:application/pdf;base64,...` URI. The request shape and regression test were corrected. On the
+repeatable live run, the model misread the catalogue year as 2025 instead of the visible 2026. The
+raw model result was preserved and a separate accepted snapshot corrected the date through the signed
+review endpoint. Safe IDs, hashes, expected values, and the correction are recorded in
+`submission/qa/live-openai-validation.json`.
 
-## Accessibility verification
+## Browser and accessibility QA
 
-Five server-rendered judging surfaces were audited with axe-core against WCAG 2 A/AA and WCAG 2.1
-A/AA rules:
+System Chrome was used through Playwright because managed Chromium download was unavailable.
 
 ```text
-/                                     0 violations
-/judge                                0 violations
-/submission-preview/evidence          0 violations
-/submission-preview/approved          0 violations
-/architecture                         0 violations
-Total:                                0 violations
-Result:                               PASSED
+Production Playwright, PostgreSQL:    8 passed
+Production Playwright, fallback:      8 passed
+axe WCAG A/AA checks per run:         5 passed, 0 violations
+Desktop in-app browser review:        PASSED
+375 px mobile in-app review:          PASSED, no horizontal overflow
+Browser console errors/warnings:      0
 ```
 
-The audit used deterministic server-rendered DOM loaded into the available offline Chromium runtime.
-The managed system Chromium is policy-blocked from navigating to local HTTP addresses, while download
-of Playwright-managed Chromium was unavailable because the Playwright CDN could not be resolved.
-Therefore the complete interactive Playwright suite is included but is not claimed as executed here.
+Browser QA found and fixed one 4.36:1 muted-text contrast failure and a mobile navigation rule that
+hid all primary links below 720 pixels.
 
-Run it in an unrestricted environment with:
+## Security checks
 
-```powershell
-npm ci
-npx playwright install chromium
-npm run test:e2e
-```
+- Safe readiness output: HTTP 200 with Boolean/configuration status only.
+- PostgreSQL mode: configured and reachable.
+- Prepared fallback mode: explicit, non-durable, HTTP 200.
+- HMAC tamper rejection and server-side draft reconstruction: passing tests.
+- `npm audit --omit=dev`: 0 high, 0 critical, 2 moderate transitive findings.
+- Secrets remain ignored; no plaintext OpenAI key was read or printed.
 
-## Submission assets
+## Generated validation fixtures
 
-Generated and verified:
+- `fixtures/live-validation/synthetic-shelf.png`: fictional generated shelf; visually checked.
+- `output/pdf/synthetic-supplier-catalogue.pdf`: fictional one-page catalogue; rendered to PNG and
+  visually checked for clipping, alignment and legibility.
+- `scripts/validate-live-workflow.mjs`: repeatable safe end-to-end validator.
+
+## Final narrated video
+
+The final video was generated from ten freshly captured 1920 x 1080 product frames. Narration uses
+the OpenAI `gpt-4o-mini-tts` model with the Marin built-in voice, and the opening sentence and title
+card disclose that the voice is AI-generated. Twenty-one captions are burned into the video and
+also supplied as an SRT sidecar.
 
 ```text
-1440 x 900 screenshots:               4
-Accessibility report:                 PRESENT
-Copy-ready Devpost entry:             PRESENT
-Deployment runbook:                   PRESENT
-Publication checklist:                PRESENT
-Codex evidence guide:                 PRESENT
-Three-minute narration script:        PRESENT
-Draft reference MP4:                  16 seconds
+Container/codecs:                    MP4, H.264 video, AAC audio
+Resolution/frame rate:               1920 x 1080, 30 fps
+Narration duration:                  153.456 seconds
+Final video duration:                153.700 seconds
+Final video size:                    5,948,078 bytes
+Final video SHA-256:                 e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98
+Visual samples inspected:            3, passed
+Three-minute requirement:            passed
 ```
 
-The draft MP4 is a silent visual timing reference. It is not represented as the final narrated
-YouTube submission.
+## Not yet complete
 
-## Core authority workflow retained from v0.4.0
+- GitHub publication and repository visibility/licensing decision.
+- Vercel project creation, production database, environment variables and deployment.
+- Production URL browser/security QA.
+- Primary Codex `/feedback` submission ID; `/feedback` is an interactive app dialog and no callable
+  feedback tool is exposed in this task.
+- Final narrated video is locally complete; YouTube upload and Devpost submission remain external.
 
-```text
-Accepted evidence snapshots:          4
-Accepted product mappings:            16
-Restock candidates:                    4
-Selected order lines:                  3
-Available budget:                 R1,500.00
-Approved order total:             R1,399.10
-Budget remaining:                   R100.90
-Supplier purchase orders:             2
-Supplier messages:                    2
-Audit events:                          6
-Tampered signed draft:               REJECTED
-Evaluation cases:                     12
-Evaluation cases passed:              11
-Unsafe automatic merges:               0
-```
-
-## Live OpenAI validation status
-
-No plaintext API key was present in the packaging environment. Consequently, no billed live GPT-5.6
-request was made. The release includes `npm run validate:openai`, which performs one minimal Responses
-API request and returns only safe metadata after the existing key and an exact project-supported model
-identifier are configured.
-
-Both OpenAI adapters remain covered by injected-SDK integration tests, and the prepared judging path
-works without a live model request.
-
-## Credential-bound actions not performed
-
-The following require the user's external accounts and were deliberately not represented as complete:
-
-- publishing the repository to GitHub;
-- importing and deploying it to Vercel;
-- adding production environment variables;
-- recording the primary Codex `/feedback` session ID;
-- recording and publishing the final narrated YouTube video;
-- submitting the final Devpost form.
-
-Copy-ready commands and instructions are included under `submission/`.
-
-## Release integrity
-
-- No `.env.local`, API key or signing secret is included.
-- `node_modules`, `.next`, Playwright reports and other generated dependency/build directories are excluded.
-- Source-file SHA-256 hashes are provided in `SOURCE_FILE_HASHES.txt`.
-- Runtime evidence is provided in `runtime-verification.json`.
-- Machine-readable gate evidence is provided in `verification-evidence.json`.
-- The ZIP is independently extracted and integrity-tested before release.
-
-## Result
+## Current result
 
 ```text
-RELEASE STATUS: READY FOR CREDENTIAL-BOUND PUBLICATION, LIVE OPENAI VALIDATION,
-FINAL NARRATED VIDEO RECORDING AND DEVPOST SUBMISSION
+LOCAL ENGINEERING AND LIVE MODEL VALIDATION: PASSED
+EXTERNAL PUBLICATION AND SUBMISSION: PENDING USER DECISION / ACCOUNT ACTIONS
 ```

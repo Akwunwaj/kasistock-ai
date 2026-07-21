@@ -11,6 +11,8 @@ import {
   buildRestockInputs,
   RestockInputError,
 } from "@/modules/restocking/application/build-restock-inputs";
+import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
+import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -24,8 +26,18 @@ export async function POST(request: Request) {
     const budgetCents = budgetSchema.parse(body.budgetCents);
     const inputs = buildRestockInputs({ snapshots, mappingSet, products: canonicalProducts });
     const optimisation = optimiseRestockPlan(inputs.candidates, budgetCents);
-    return NextResponse.json({ inputs, optimisation });
+    const persistence = await getWorkflowPersistence().recordRestockScenario({
+      snapshots,
+      mappingSet,
+      budgetCents,
+      inputs,
+      optimisation,
+    });
+    return NextResponse.json({ inputs, optimisation, persistence });
   } catch (error) {
+    if (error instanceof WorkflowPersistenceError) {
+      return errorResponse(503, "PERSISTENCE_UNAVAILABLE", error.message);
+    }
     if (error instanceof ReconciliationEvidenceError || error instanceof RestockInputError) {
       return errorResponse(400, error.code, error.message);
     }

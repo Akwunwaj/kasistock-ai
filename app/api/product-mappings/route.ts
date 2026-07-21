@@ -8,6 +8,8 @@ import {
   parseAndVerifyAcceptedSnapshots,
   ReconciliationEvidenceError,
 } from "@/modules/reconciliation/application/source-product-records";
+import { getWorkflowPersistence } from "@/lib/persistence/server-workflow-persistence";
+import { WorkflowPersistenceError } from "@/modules/persistence/application/workflow-persistence";
 
 export const runtime = "nodejs";
 
@@ -22,8 +24,15 @@ export async function POST(request: Request) {
       acceptedBy:
         typeof body.acceptedBy === "string" ? body.acceptedBy : "Build Week demo merchant",
     });
-    return NextResponse.json({ mappingSet }, { status: 201 });
+    const persistence = await getWorkflowPersistence().recordProductMappingSet(
+      mappingSet,
+      snapshots,
+    );
+    return NextResponse.json({ mappingSet, persistence }, { status: 201 });
   } catch (error) {
+    if (error instanceof WorkflowPersistenceError) {
+      return errorResponse(503, "PERSISTENCE_UNAVAILABLE", error.message);
+    }
     if (
       error instanceof ReconciliationEvidenceError ||
       error instanceof ProductMappingAcceptanceError

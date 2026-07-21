@@ -1,13 +1,19 @@
 {
-  "release": "0.5.0",
-  "scope": "Deployment hardening and OpenAI Build Week submission asset production",
+  "release": "0.5.0-codex-continuation",
+  "generatedAt": "2026-07-21T07:09:18.089Z",
+  "baseline": {
+    "archive": "kasistock-ai-build-week-submission-v0.5.0.zip",
+    "sha256": "44fca5be9b2391d53ca0018da5f6fd1b2195a6703a9f0b4c0d95062e1d6d7b29",
+    "importCommit": "aa0d075"
+  },
   "toolchain": {
-    "node": "24.15.0",
-    "npm": "11.12.1",
+    "node": "24.18.0",
+    "npm": "11.16.0",
     "next": "16.2.10",
     "react": "19.2.7",
     "typescript": "6.0.3",
     "openai": "6.48.0",
+    "pg": "8.22.0",
     "playwright": "1.61.1",
     "axeCorePlaywright": "4.12.1"
   },
@@ -17,48 +23,48 @@
     "lint": "passed_zero_warnings",
     "routeTypeGeneration": "passed",
     "typecheck": "passed",
-    "testFiles": 17,
-    "tests": 34,
+    "normalTestFiles": 18,
+    "normalTests": 37,
+    "conditionalDatabaseTestSkippedInNormalRun": 1,
+    "realPostgresIntegrationTests": 1,
     "failures": 0,
-    "evaluation": "passed",
-    "productionBuild": "passed",
-    "productionEnvironmentValidation": "passed",
-    "productionRoutes": "passed",
-    "readiness": "passed",
-    "securityHeaders": "passed",
-    "offlineAccessibilityAudit": "passed_zero_violations",
-    "submissionScreenshots": 4,
-    "draftReferenceVideo": "generated_16_seconds",
-    "interactiveBrowserE2E": "not_executed_environment_restriction",
-    "liveOpenAI": "not_run_no_key_in_packaging_environment",
-    "githubPublication": "pending_credentials",
-    "vercelDeployment": "pending_credentials",
-    "finalNarratedYouTube": "pending_user_recording_and_publication",
+    "productionBuild": "passed_23_routes",
+    "postgresPlaywright": "passed_8_of_8",
+    "fallbackPlaywright": "passed_8_of_8",
+    "accessibility": "passed_5_surfaces_zero_wcag_a_aa_violations",
+    "liveOpenAI": "passed_gpt_5_6_sol",
+    "finalNarratedVideo": "passed_153_7_seconds_captioned",
+    "githubPublication": "pending_visibility_and_licensing_decision",
+    "vercelDeployment": "pending_external_publication",
+    "youtubePublication": "pending_external_upload",
     "devpostSubmission": "pending_external_submission"
   },
-  "accessibility": {
-    "standard": "WCAG 2 A/AA and WCAG 2.1 A/AA",
-    "routes": 5,
-    "violations": 0
+  "liveOpenAI": {
+    "model": "gpt-5.6-sol",
+    "smokeResponseId": "resp_0ef04ac8d1cf545f016a5e81d3b2dc81a38cc018604770f270",
+    "shelfResponseId": "resp_00dd213e03c5662c016a5e86822778819f80c9c3de0e01c7ce",
+    "supplierResponseId": "resp_02ddba0c272402e1016a5e86893d3481a08aebe7c76e6de728",
+    "persistence": "postgresql_durable",
+    "supplierDateCorrection": "raw_2025_preserved_accepted_2026"
   },
-  "coreWorkflow": {
-    "acceptedEvidenceSnapshots": 4,
-    "acceptedMappings": 16,
-    "restockCandidates": 4,
-    "selectedOrderLines": 3,
-    "availableBudgetCents": 150000,
-    "approvedOrderTotalCents": 139910,
-    "remainingBudgetCents": 10090,
-    "supplierPurchaseOrders": 2,
-    "supplierMessages": 2,
-    "auditEvents": 6,
-    "unsafeAutomaticMerges": 0
+  "security": {
+    "signedDraftTamperRejection": "passed",
+    "serverRebuiltDraft": "passed",
+    "secretsPrinted": false,
+    "npmAuditHigh": 0,
+    "npmAuditCritical": 0,
+    "npmAuditModerateTransitive": 2
   },
-  "packaging": {
-    "secretFilesExcluded": true,
-    "generatedDependenciesExcluded": true,
-    "generatedBuildOutputExcluded": true,
-    "sourceHashesGenerated": true,
-    "zipIntegrityTested": true
+  "finalVideo": {
+    "path": "submission/video/kasistock-ai-demo.mp4",
+    "durationSeconds": 153.7,
+    "width": 1920,
+    "height": 1080,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "captionCount": 21,
+    "aiVoiceDisclosure": true,
+    "bytes": 5948078,
+    "sha256": "e41b58aa836ea8b47fcbe7ceae426cae84c0dc686d44f09602e0ec16a38c0c98"
   }
 }
