@@ -105,4 +105,4 @@ pdf-lib, Vitest, Playwright, axe-core, GitHub Actions, and Vercel deployment con
 - Public demo: `https://kasistock-ai.vercel.app`
 - Code repository: `https://github.com/Akwunwaj/kasistock-ai` (private, no licence)
 - Demo video: `<YOUTUBE_URL>`
-- Primary Codex `/feedback` session ID: `<CODEX_FEEDBACK_SESSION_ID>`
+- Primary Codex `/feedback` session ID: `019f8102-3d1f-7142-a96d-c14344f0f73c`

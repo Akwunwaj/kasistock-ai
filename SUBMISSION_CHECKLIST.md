@@ -32,7 +32,7 @@
 - [x] GitHub Actions workflow for quality and Playwright browser checks.
 - [x] Run full interactive Playwright suite against PostgreSQL and fallback production modes.
 - [x] Run the complete Playwright suite against the live Vercel deployment.
-- [ ] Record the primary Codex `/feedback` session ID.
+- [x] Record the primary Codex `/feedback` session ID.
 
 ## Submission assets
 
@@ -45,6 +45,6 @@
 - [x] Produce the captioned final narrated demonstration under three minutes (2:33.7 locally).
 - [ ] Publish the final narrated demonstration to YouTube.
 - [ ] Publish or share the repository with the judges.
-- [ ] Add remaining YouTube and Codex-session links (deployment and repository links recorded).
+- [ ] Add the remaining YouTube link (deployment, repository, and Codex-session evidence recorded).
 - [ ] Test every public link in a private browser window.
 - [ ] Submit the Devpost entry before the official deadline.

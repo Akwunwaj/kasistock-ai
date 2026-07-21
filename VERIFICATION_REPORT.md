@@ -161,10 +161,16 @@ Visual samples inspected:            3, passed
 Three-minute requirement:            passed
 ```
 
+## Primary Codex feedback evidence
+
+The `/feedback` dialog was submitted from the primary continuation task with logs included.
+
+```text
+Session ID:                           019f8102-3d1f-7142-a96d-c14344f0f73c
+```
+
 ## Not yet complete
 
-- Primary Codex `/feedback` submission ID; `/feedback` is an interactive app dialog and no callable
-  feedback tool is exposed in this task.
 - Judge access to the private repository must be granted if the competition requires source review.
 - Final narrated video is locally complete; YouTube upload and Devpost submission remain external.
 
@@ -172,5 +178,5 @@ Three-minute requirement:            passed
 
 ```text
 ENGINEERING, CI, DEPLOYMENT AND LIVE VALIDATION: PASSED
-YOUTUBE, CODEX FEEDBACK ID AND DEVPOST SUBMISSION: PENDING
+YOUTUBE AND DEVPOST SUBMISSION: PENDING
 ```

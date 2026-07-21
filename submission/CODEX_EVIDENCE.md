@@ -1,13 +1,12 @@
 # Codex contribution evidence
 
-## Primary evidence required before submission
+## Primary evidence
 
-The current Codex app exposes `/feedback` as an interactive dialog, not as a callable project tool.
-After the local engineering work is final, run `/feedback` in this primary task, include logs, submit,
-and replace this placeholder with the returned real ID:
+The `/feedback` dialog was submitted from this primary Codex task with logs included. The returned
+session ID is:
 
 ```text
-PENDING_INTERACTIVE_FEEDBACK_DIALOG
+019f8102-3d1f-7142-a96d-c14344f0f73c
 ```
 
 Do not substitute a Git commit, task title, invented UUID, or OpenAI response ID.

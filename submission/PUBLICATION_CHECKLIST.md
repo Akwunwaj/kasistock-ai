@@ -17,7 +17,7 @@
 - [ ] Public, or shared with the official judging accounts if private repositories are permitted.
 - [x] README contains setup, architecture, tests, Codex contribution, and known limitations.
 - [x] No `.env.local`, API key, signing secret, build output, or dependency directory committed.
-- [ ] Primary Codex `/feedback` session ID recorded.
+- [x] Primary Codex `/feedback` session ID recorded.
 - [x] KasiStock AI commits are clearly identifiable.
 - [x] GitHub Actions passes.
 - [x] Confirm repository visibility and licence with the owner before making it public or adding a licence.
@@ -39,6 +39,6 @@
 - [ ] Add repository URL.
 - [ ] Add YouTube URL.
 - [ ] Upload the three strongest screenshots.
-- [ ] Add the Codex `/feedback` session ID.
+- [x] Add the Codex `/feedback` session ID.
 - [ ] Test every link in a private browser window.
 - [ ] Submit before 21 July 2026 at 5:00 p.m. PDT.

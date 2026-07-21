@@ -37,7 +37,7 @@ Use this log together with Git history and Codex session evidence.
 
 ### Primary Codex `/feedback` session ID
 
-`TO_BE_RECORDED_BEFORE_SUBMISSION`
+Not recorded in the supplied baseline.
 
 ## 2026-07-18 — v0.2.0 multimodal evidence and human verification
 
@@ -141,7 +141,7 @@ Use this log together with Git history and Codex session evidence.
 
 ### Primary Codex `/feedback` session ID
 
-`PENDING_INTERACTIVE_FEEDBACK_DIALOG`
+`019f8102-3d1f-7142-a96d-c14344f0f73c`
 
 ## 21 July 2026 — private publication and production validation
 
