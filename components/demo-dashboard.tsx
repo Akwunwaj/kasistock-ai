@@ -6,139 +6,165 @@ export function DemoDashboard() {
   const { summary, evidence, recommendations, audit } = demoScenario;
 
   return (
-    <section className="workspace" aria-label="KasiStock demonstration workspace">
-      <aside className="panel evidencePanel">
-        <div className="panelHeader">
-          <div>
-            <p className="step">01 · EVIDENCE</p>
-            <h2>Store inputs</h2>
-          </div>
-          <span className="completion">4/4 ready</span>
+    <section className="merchantWorkspace" aria-label="KasiStock demonstration workspace">
+      <header className="overviewHeader">
+        <div>
+          <p className="pageKicker">Thursday, 24 September</p>
+          <h1>Today&apos;s restock</h1>
+          <p>One check is waiting before the supplier order can be approved.</p>
         </div>
-        <div className="evidenceList">
-          {evidence.map((item) => (
-            <article className="evidenceItem" key={item.name}>
-              <div className="fileIcon">{item.type}</div>
-              <div>
-                <strong>{item.name}</strong>
-                <span>{item.detail}</span>
-              </div>
-              <span className={item.needsReview ? "reviewBadge" : "readyBadge"}>
-                {item.needsReview ? "Review" : "Ready"}
-              </span>
-            </article>
-          ))}
-        </div>
-        <div className="reviewNotice">
-          <strong>1 field needs confirmation</strong>
-          <p>Shelf quantity for Albany bread was estimated with medium confidence.</p>
-          <Link className="textButton" href="/evidence">
-            Review extraction →
-          </Link>
-        </div>
-      </aside>
+        <Link className="button primary" href="/evidence">
+          Review the outstanding check
+        </Link>
+      </header>
 
-      <section className="panel decisionPanel">
-        <div className="panelHeader">
-          <div>
-            <p className="step">02 · DECISION</p>
-            <h2>Budget scenario</h2>
-          </div>
-          <span className="versionBadge">v1</span>
+      <div className="attentionStrip" role="status">
+        <span className="attentionMark">1</span>
+        <div>
+          <strong>Albany bread quantity needs your confirmation</strong>
+          <p>The shelf photo was readable, but the estimated quantity has medium confidence.</p>
         </div>
-        <div className="budgetCard">
-          <span>Available cash</span>
-          <strong>{formatZar(summary.budgetCents)}</strong>
-          <div className="budgetBar">
+        <Link href="/evidence">
+          Check quantity <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+
+      <div className="overviewGrid">
+        <section className="workSection proposedOrder">
+          <div className="sectionHeading">
+            <div>
+              <p className="step">Proposed order</p>
+              <h2>What to buy</h2>
+            </div>
+            <span className="plainStatus">4 products · 2 suppliers</span>
+          </div>
+          <div className="orderTable" role="table" aria-label="Proposed purchase order">
+            <div className="orderTableHeader" role="row">
+              <span role="columnheader">Product</span>
+              <span role="columnheader">Supplier</span>
+              <span role="columnheader">Order</span>
+              <span role="columnheader">Cover</span>
+              <span role="columnheader">Cost</span>
+            </div>
+            {recommendations.map((line) => (
+              <article className="orderTableRow" role="row" key={line.productId}>
+                <div role="cell">
+                  <span className="productThumb" aria-hidden="true">
+                    {line.rank}
+                  </span>
+                  <div>
+                    <strong>{line.productName}</strong>
+                    <small>{line.explanation}</small>
+                  </div>
+                </div>
+                <span role="cell">{line.supplierName}</span>
+                <strong role="cell">{line.quantity} units</strong>
+                <span role="cell">{line.daysOfCover.toFixed(1)} days</span>
+                <strong role="cell">{formatZar(line.lineCostCents)}</strong>
+              </article>
+            ))}
+          </div>
+          <div className="orderTableFooter">
+            <span>Based on accepted shelf, sales and supplier evidence</span>
+            <Link href="/decision" className="button primary">
+              Review and adjust order
+            </Link>
+          </div>
+        </section>
+
+        <aside className="budgetRail" aria-label="Budget summary">
+          <div className="budgetRailHeader">
+            <span>Available cash</span>
+            <strong>{formatZar(summary.budgetCents)}</strong>
+            <small>for this restock</small>
+          </div>
+          <div
+            className="budgetMeter"
+            aria-label={`${summary.budgetUtilisationPercent}% of budget allocated`}
+          >
             <span style={{ width: `${summary.budgetUtilisationPercent}%` }} />
           </div>
-          <small>{formatZar(summary.remainingCents)} remains unallocated</small>
-        </div>
-        <div className="metricGrid">
-          <div>
-            <span>Stock-outs avoided</span>
-            <strong>{summary.stockOutsAvoided}</strong>
-          </div>
-          <div>
-            <span>Expected gross profit</span>
-            <strong>{formatZar(summary.expectedGrossProfitCents)}</strong>
-          </div>
-          <div>
-            <span>Products selected</span>
-            <strong>{summary.productsSelected}</strong>
-          </div>
-          <div>
-            <span>Supplier savings</span>
-            <strong>{formatZar(summary.supplierSavingsCents)}</strong>
-          </div>
-        </div>
-        <div className="constraintList">
-          <div>
-            <span>✓</span> Essential products prioritised
-          </div>
-          <div>
-            <span>✓</span> Supplier pack sizes respected
-          </div>
-          <div>
-            <span>✓</span> Budget ceiling enforced in integer cents
-          </div>
-        </div>
-      </section>
-
-      <section className="panel recommendationPanel">
-        <div className="panelHeader">
-          <div>
-            <p className="step">03 · RECOMMENDATION</p>
-            <h2>Proposed purchase order</h2>
-          </div>
-          <span className="confidenceBadge">High confidence</span>
-        </div>
-        <div className="recommendationList">
-          {recommendations.map((line) => (
-            <article className="recommendation" key={line.productId}>
-              <div className="rank">{line.rank}</div>
-              <div className="recommendationBody">
-                <div className="recommendationTitle">
-                  <strong>{line.productName}</strong>
-                  <span>{formatZar(line.lineCostCents)}</span>
-                </div>
-                <p>{line.explanation}</p>
-                <div className="recommendationMeta">
-                  <span>{line.quantity} units</span>
-                  <span>{line.supplierName}</span>
-                  <span>{line.daysOfCover.toFixed(1)} days cover</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        <div className="approvalBar">
-          <div>
-            <span>Order total</span>
-            <strong>{formatZar(summary.orderTotalCents)}</strong>
-          </div>
-          <Link href="/decision" className="button primary">
-            Open live decision engine
-          </Link>
-        </div>
-      </section>
-
-      <section className="panel auditPanel">
-        <div className="panelHeader compact">
-          <div>
-            <p className="step">AUDIT EVIDENCE</p>
-            <h2>Decision timeline</h2>
-          </div>
-        </div>
-        <div className="timeline">
-          {audit.map((entry) => (
-            <div className="timelineItem" key={`${entry.time}-${entry.event}`}>
-              <time>{entry.time}</time>
-              <span /> <p>{entry.event}</p>
+          <dl className="budgetBreakdown">
+            <div>
+              <dt>Proposed spend</dt>
+              <dd>{formatZar(summary.orderTotalCents)}</dd>
             </div>
-          ))}
-        </div>
-      </section>
+            <div className="remaining">
+              <dt>Cash left</dt>
+              <dd>{formatZar(summary.remainingCents)}</dd>
+            </div>
+            <div>
+              <dt>Expected gross profit</dt>
+              <dd>{formatZar(summary.expectedGrossProfitCents)}</dd>
+            </div>
+            <div>
+              <dt>Supplier saving</dt>
+              <dd>{formatZar(summary.supplierSavingsCents)}</dd>
+            </div>
+          </dl>
+          <div className="budgetRules">
+            <strong>Plan checks</strong>
+            <span>
+              <i>✓</i> Budget ceiling respected
+            </span>
+            <span>
+              <i>✓</i> Pack sizes respected
+            </span>
+            <span>
+              <i>✓</i> {summary.stockOutsAvoided} stock-outs avoided
+            </span>
+          </div>
+        </aside>
+
+        <section className="workSection evidenceSummary">
+          <div className="panelHeader">
+            <div>
+              <p className="step">Evidence</p>
+              <h2>Information used</h2>
+            </div>
+            <Link className="sectionLink" href="/evidence">
+              Open evidence desk →
+            </Link>
+          </div>
+          <div className="evidenceList">
+            {evidence.map((item) => (
+              <article className="evidenceItem" key={item.name}>
+                <div className="fileIcon">{item.type}</div>
+                <div>
+                  <strong>{item.name}</strong>
+                  <span>{item.detail}</span>
+                </div>
+                <span className={item.needsReview ? "reviewBadge" : "readyBadge"}>
+                  {item.needsReview ? "Check" : "Accepted"}
+                </span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="workSection activitySummary">
+          <div className="panelHeader compact">
+            <div>
+              <p className="step">Activity</p>
+              <h2>How this plan was made</h2>
+            </div>
+          </div>
+          <div className="humanTimeline">
+            {audit.map((entry, index) => (
+              <article key={`${entry.time}-${entry.event}`}>
+                <div className="timelineRail">
+                  <span>{index + 1}</span>
+                  {index < audit.length - 1 ? <i /> : null}
+                </div>
+                <div>
+                  <strong>{entry.event}</strong>
+                  <time>{entry.time}</time>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
     </section>
   );
 }

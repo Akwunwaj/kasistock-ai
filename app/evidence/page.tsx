@@ -1,42 +1,29 @@
-import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
 import { EvidenceWorkbench } from "@/components/evidence-workbench";
 
 export default function EvidencePage() {
   return (
-    <main id="main-content">
-      <header className="topbar">
-        <Link className="brand" href="/" aria-label="KasiStock AI home">
-          <span className="brandMark">K</span>
-          <span>
-            <strong>KasiStock AI</strong>
-            <small>Evidence verification workspace</small>
-          </span>
-        </Link>
-        <div className="topbarActions">
-          <span className="statusPill">
-            <span className="statusDot" /> Human-in-the-loop gate
-          </span>
-          <Link className="button secondary" href="/">
-            Demo dashboard
-          </Link>
-        </div>
-      </header>
-      <section className="evidenceHero">
+    <AppShell current="evidence">
+      <section className="workPageHeader">
         <div>
-          <p className="eyebrow">MULTIMODAL EVIDENCE PIPELINE</p>
-          <h1>Extract with AI. Decide with evidence.</h1>
-          <p className="heroCopy">
-            GPT‑5.6 interprets shelf images and supplier documents. The merchant must verify
-            uncertainty before any value can enter the deterministic restocking engine.
+          <p className="pageKicker">Evidence desk</p>
+          <h1>Check what the shop data says</h1>
+          <p>
+            Upload shelf photos or supplier lists, then confirm anything uncertain before it affects
+            the restock plan.
           </p>
         </div>
-        <div className="trustBoundary">
-          <span>Authority boundary</span>
-          <strong>AI proposes → Human accepts</strong>
-          <small>No model output can approve a purchase.</small>
+        <div className="authorityNote">
+          <span className="authorityIcon" aria-hidden="true">
+            ✓
+          </span>
+          <div>
+            <strong>You stay in control</strong>
+            <small>AI reads the evidence. Only your accepted values can be used.</small>
+          </div>
         </div>
       </section>
       <EvidenceWorkbench />
-    </main>
+    </AppShell>
   );
 }
