@@ -910,6 +910,68 @@ body {
   }
 }
 
+.budgetRailHeader > label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.67rem;
+}
+
+.budgetInputWrap {
+  margin: 5px 0 3px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 5px;
+  border-bottom: 1px solid transparent;
+}
+
+.budgetInputWrap:focus-within {
+  border-bottom-color: var(--accent);
+}
+
+.budgetRailHeader .budgetInputWrap > span {
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-weight: 850;
+}
+
+.budgetInputWrap input {
+  min-width: 0;
+  width: 100%;
+  padding: 0;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 1.9rem;
+  font-weight: 850;
+  letter-spacing: -0.045em;
+  appearance: textfield;
+}
+
+.budgetInputWrap input::-webkit-inner-spin-button,
+.budgetInputWrap input::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.budgetMeter.overBudget span {
+  background: #b3473d;
+}
+.budgetBreakdown .budgetShortfall dd,
+.budgetRules .ruleFailed,
+.budgetRules .ruleFailed i {
+  color: #a23f36;
+}
+
+.recalculateLink {
+  margin-top: 13px;
+  display: block;
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 850;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { BudgetProvider } from "@/components/budget-context";
 import "./globals.css";
 
 const applicationUrl = process.env.APP_BASE_URL?.trim();
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skipLink" href="#main-content">
           Skip to main content
         </a>
-        {children}
+        <BudgetProvider>{children}</BudgetProvider>
       </body>
     </html>
   );

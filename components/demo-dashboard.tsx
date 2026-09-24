@@ -1,9 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo } from "react";
+import { useBudget } from "@/components/budget-context";
 import { demoScenario } from "@/fixtures/demo-scenario";
-import { formatZar } from "@/modules/shared/domain/money";
+import { cents, formatZar } from "@/modules/shared/domain/money";
 
 export function DemoDashboard() {
+  const { budgetRand, setBudgetRand } = useBudget();
   const { summary, evidence, recommendations, audit } = demoScenario;
+  const budgetCents = Math.round(budgetRand * 100);
+  const remainingCents = budgetCents - summary.orderTotalCents;
+  const isOverBudget = remainingCents < 0;
+  const budgetUtilisationPercent = useMemo(
+    () =>
+      Math.min(100, Math.round((summary.orderTotalCents / Math.max(1, budgetCents)) * 10000) / 100),
+    [budgetCents, summary.orderTotalCents],
+  );
+  const budgetChanged = budgetCents !== summary.budgetCents;
 
   return (
     <section className="merchantWorkspace" aria-label="KasiStock demonstration workspace">
@@ -74,24 +88,36 @@ export function DemoDashboard() {
 
         <aside className="budgetRail" aria-label="Budget summary">
           <div className="budgetRailHeader">
-            <span>Available cash</span>
-            <strong>{formatZar(summary.budgetCents)}</strong>
-            <small>for this restock</small>
+            <label htmlFor="available-cash">Available cash</label>
+            <div className="budgetInputWrap">
+              <span>R</span>
+              <input
+                id="available-cash"
+                type="number"
+                min="100"
+                step="100"
+                inputMode="decimal"
+                value={budgetRand}
+                onChange={(event) => setBudgetRand(Number(event.target.value))}
+                aria-describedby="available-cash-help"
+              />
+            </div>
+            <small id="available-cash-help">Edit the cash available for this restock</small>
           </div>
           <div
-            className="budgetMeter"
-            aria-label={`${summary.budgetUtilisationPercent}% of budget allocated`}
+            className={`budgetMeter ${isOverBudget ? "overBudget" : ""}`}
+            aria-label={`${budgetUtilisationPercent}% of budget allocated`}
           >
-            <span style={{ width: `${summary.budgetUtilisationPercent}%` }} />
+            <span style={{ width: `${budgetUtilisationPercent}%` }} />
           </div>
           <dl className="budgetBreakdown">
             <div>
               <dt>Proposed spend</dt>
               <dd>{formatZar(summary.orderTotalCents)}</dd>
             </div>
-            <div className="remaining">
-              <dt>Cash left</dt>
-              <dd>{formatZar(summary.remainingCents)}</dd>
+            <div className={isOverBudget ? "budgetShortfall" : "remaining"}>
+              <dt>{isOverBudget ? "Over budget" : "Cash left"}</dt>
+              <dd>{formatZar(cents(Math.abs(remainingCents)))}</dd>
             </div>
             <div>
               <dt>Expected gross profit</dt>
@@ -104,8 +130,9 @@ export function DemoDashboard() {
           </dl>
           <div className="budgetRules">
             <strong>Plan checks</strong>
-            <span>
-              <i>✓</i> Budget ceiling respected
+            <span className={isOverBudget ? "ruleFailed" : undefined}>
+              <i>{isOverBudget ? "!" : "✓"}</i>{" "}
+              {isOverBudget ? "Current proposal exceeds the budget" : "Budget ceiling respected"}
             </span>
             <span>
               <i>✓</i> Pack sizes respected
@@ -113,6 +140,11 @@ export function DemoDashboard() {
             <span>
               <i>✓</i> {summary.stockOutsAvoided} stock-outs avoided
             </span>
+            {budgetChanged ? (
+              <Link href="/decision" className="recalculateLink">
+                Rebuild the plan with this budget →
+              </Link>
+            ) : null}
           </div>
         </aside>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useBudget } from "@/components/budget-context";
 import type { CanonicalProduct } from "@/modules/catalogue/domain/product";
 import type { AcceptedEvidenceSnapshot } from "@/modules/evidence/domain/contracts";
 import type { OptimisationResult } from "@/modules/optimisation/domain/types";
@@ -54,6 +55,7 @@ interface MappingErrorDetails {
 }
 
 export function DecisionWorkbench() {
+  const { budgetRand, setBudgetRand } = useBudget();
   const [snapshots, setSnapshots] = useState<AcceptedEvidenceSnapshot[]>([]);
   const [products, setProducts] = useState<CanonicalProduct[]>([]);
   const [proposals, setProposals] = useState<ProductMatchProposal[]>([]);
@@ -61,7 +63,6 @@ export function DecisionWorkbench() {
   const [confirmed, setConfirmed] = useState<Set<string>>(new Set());
   const [mappingSet, setMappingSet] = useState<AcceptedProductMappingSet | null>(null);
   const [calculation, setCalculation] = useState<CalculationResponse | null>(null);
-  const [budgetRand, setBudgetRand] = useState(1500);
   const [status, setStatus] = useState<"idle" | "loading" | "gpt" | "accepting" | "calculating">(
     "idle",
   );
@@ -635,7 +636,14 @@ export function DecisionWorkbench() {
                   min="100"
                   step="100"
                   value={budgetRand}
-                  onChange={(event) => setBudgetRand(Number(event.target.value))}
+                  onChange={(event) => {
+                    setBudgetRand(Number(event.target.value));
+                    setCalculation(null);
+                    setOrderSelections({});
+                    setDraftEnvelope(null);
+                    setApprovedEnvelope(null);
+                    setApprovalConfirmed(false);
+                  }}
                 />
               </label>
               <button
