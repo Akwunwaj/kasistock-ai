@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type AppShellProps = {
-  current: "overview" | "evidence" | "decision" | "guide";
+  current: "overview" | "evidence" | "decision" | "guide" | "architecture" | "judge";
   children: React.ReactNode;
 };
 
@@ -44,8 +44,20 @@ export function AppShell({ current, children }: AppShellProps) {
 
         <div className="sideNavSupport">
           <p>Reference</p>
-          <Link href="/architecture">How decisions work</Link>
-          <Link href="/judge">Demo guide</Link>
+          <Link
+            href="/architecture"
+            className={current === "architecture" ? "active" : undefined}
+            aria-current={current === "architecture" ? "page" : undefined}
+          >
+            How decisions work
+          </Link>
+          <Link
+            href="/judge"
+            className={current === "judge" ? "active" : undefined}
+            aria-current={current === "judge" ? "page" : undefined}
+          >
+            Demo walkthrough
+          </Link>
         </div>
 
         <div className="merchantIdentity">

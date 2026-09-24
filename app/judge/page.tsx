@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
 
 export const metadata: Metadata = {
   title: "Judge guide",
@@ -27,88 +28,90 @@ const judgingSignals = [
 
 export default function JudgePage() {
   return (
-    <main id="main-content" className="judgePage">
-      <header className="topbar">
-        <Link className="brand" href="/" aria-label="KasiStock AI home">
-          <span className="brandMark">K</span>
-          <span>
-            <strong>KasiStock AI</strong>
-            <small>KasiStock AI judge guide</small>
-          </span>
-        </Link>
-        <div className="topbarActions">
-          <Link className="button secondary" href="/evidence">
-            Start live demo
-          </Link>
-          <Link className="button secondary" href="/architecture">
-            Architecture
-          </Link>
-        </div>
-      </header>
+    <AppShell current="judge">
+      <article className="referencePage judgeRefresh">
+        <section className="referenceHero">
+          <div>
+            <p className="pageKicker">Two-minute demonstration</p>
+            <h1>See the proof, then the purchase decision</h1>
+            <p>
+              KasiStock turns shelf evidence, supplier prices and recent sales into an explainable
+              order while preserving human authority over every consequential step.
+            </p>
+          </div>
+          <div className="preparedOutcome" aria-label="Prepared demonstration outcome">
+            <span>Prepared outcome</span>
+            <strong>R1,399.10</strong>
+            <small>approved · R100.90 remains</small>
+          </div>
+        </section>
 
-      <section className="judgeHero">
-        <div>
-          <p className="eyebrow">TWO-MINUTE JUDGING PATH</p>
-          <h1>See the evidence, authority, and business decision.</h1>
-          <p className="heroCopy">
-            KasiStock AI helps a small retailer turn shelf images, supplier catalogues, and recent
-            sales into an explainable purchase order that never exceeds the available cash budget.
-          </p>
-        </div>
-        <div className="judgeOutcome" aria-label="Prepared demonstration outcome">
-          <span>Prepared outcome</span>
-          <strong>R1,399.10 approved</strong>
-          <small>R100.90 remains from a R1,500 budget</small>
-        </div>
-      </section>
+        <section className="demoPath" aria-labelledby="judge-steps-title">
+          <header>
+            <p className="pageKicker">Recommended path</p>
+            <h2 id="judge-steps-title">Three stops through the real workflow</h2>
+          </header>
+          <ol>
+            <li>
+              <span>01</span>
+              <div>
+                <h3>Review the evidence</h3>
+                <p>
+                  Load prepared shelf and supplier evidence. Inspect the proposed values and see
+                  where human review is required.
+                </p>
+                <strong>AI proposes · Human verifies</strong>
+              </div>
+              <Link className="button primary" href="/evidence">
+                Open evidence
+              </Link>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <h3>Build the plan</h3>
+                <p>
+                  Confirm product identities, calculate demand and optimise a basket without
+                  exceeding R1,500.
+                </p>
+                <strong>Human confirms · Code calculates</strong>
+              </div>
+              <Link className="button primary" href="/decision">
+                Open restock plan
+              </Link>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <h3>Inspect the approved result</h3>
+                <p>
+                  See the immutable approval, supplier split, purchase-order output and audit
+                  evidence.
+                </p>
+                <strong>Server locks · Merchant approves</strong>
+              </div>
+              <Link className="button primary" href="/submission-preview/approved">
+                View approved result
+              </Link>
+            </li>
+          </ol>
+        </section>
 
-      <section className="judgeSteps" aria-labelledby="judge-steps-title">
-        <div className="sectionHeading">
-          <p className="eyebrow">RECOMMENDED PATH</p>
-          <h2 id="judge-steps-title">Three steps, one authority chain</h2>
-        </div>
-        <ol className="judgeStepGrid">
-          <li>
-            <span className="judgeStepNumber">1</span>
-            <h3>Review evidence</h3>
-            <p>Load prepared shelf and supplier evidence, inspect uncertainty, and accept it.</p>
-            <Link className="button primary" href="/evidence">
-              Open evidence workspace
-            </Link>
-          </li>
-          <li>
-            <span className="judgeStepNumber">2</span>
-            <h3>Build the decision</h3>
-            <p>Confirm product identities, calculate demand, and optimise the R1,500 basket.</p>
-            <Link className="button primary" href="/decision">
-              Open decision engine
-            </Link>
-          </li>
-          <li>
-            <span className="judgeStepNumber">3</span>
-            <h3>Approve supplier orders</h3>
-            <p>Lock the draft, approve explicitly, and download signed supplier purchase orders.</p>
-            <Link className="button primary" href="/submission-preview/approved">
-              Preview approved result
-            </Link>
-          </li>
-        </ol>
-      </section>
-
-      <section className="judgeSignals" aria-labelledby="judging-signals-title">
-        <div className="sectionHeading">
-          <p className="eyebrow">JUDGING SIGNALS</p>
-          <h2 id="judging-signals-title">Why the implementation is defensible</h2>
-        </div>
-        <div className="judgeSignalGrid">
-          {judgingSignals.map(([title, description]) => (
-            <article key={title}>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-    </main>
+        <section className="judgeSignalsRefresh" aria-labelledby="judging-signals-title">
+          <header>
+            <p className="pageKicker">What to look for</p>
+            <h2 id="judging-signals-title">A useful idea with enforceable boundaries</h2>
+          </header>
+          <div>
+            {judgingSignals.map(([title, description]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </article>
+    </AppShell>
   );
 }
